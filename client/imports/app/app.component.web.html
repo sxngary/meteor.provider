@@ -1,0 +1,18 @@
+<nav>
+    <div class="nav-wrapper">
+      <a href="javascript:;" class="brand-logo">Regulated Pharma Manager</a>
+      <a href="javascript:;" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a [routerLink]="['']">Home</a></li>
+        <li [hidden]="user"><a [routerLink]="['/login']">Login</a></li>
+        <li [hidden]="!user"><a (click)="logout()" class="waves-effect waves-light btn">Logout</a></li>
+      </ul>
+      <ul class="side-nav" id="mobile-demo">
+        <li><a [routerLink]="['']">Home</a></li>
+        <li [hidden]="user"><a [routerLink]="['/login']">Login</a></li>
+        <li [hidden]="!user"><a (click)="logout()">Logout</a></li>
+      </ul>
+    </div>
+</nav>
+
+<router-outlet></router-outlet>

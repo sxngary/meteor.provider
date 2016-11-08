@@ -1,0 +1,15 @@
+<div class="row">
+    <div class="col s3">&nbsp;</div>
+    <div class="col s6 valign-wrapper" style="height: 200px;background-color: #ccc;" 
+      fileDrop
+      [ngClass]="{'file-is-over': fileIsOver, 'file-uploading': uploading}"
+      (fileOver)="fileOver($event)"
+      (onFileDrop)="onFileDrop($event)">
+        <div class="valign">
+          <h5 class="center-align">Drop a csv file here to import.</h5>
+          <p>Find sample file under public folder.</p>
+          <p *ngIf="uploading">Uploading...</p>
+        </div>
+    </div>
+    <div class="col s3">&nbsp;</div>
+</div>
