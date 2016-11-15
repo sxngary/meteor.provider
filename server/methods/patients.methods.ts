@@ -148,7 +148,7 @@ Meteor.methods({
         if (typeof user.invites == "undefined") {
             user.invites = [];
         }
-        if (user.services.password.reset.reason == "enroll") {
+        if (typeof user.services.password.reset !== "undefined" && user.services.password.reset.reason == "enroll") {
             user.invites.push(user.services.password.reset);
         }
         Meteor.users.update({_id: userId}, {$set: {

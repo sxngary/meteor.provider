@@ -4,6 +4,7 @@ import {Observable, Subscription, Subject} from "rxjs";
 import {PaginationService} from "ng2-pagination";
 import {MeteorObservable} from "meteor-rxjs";
 import {InjectUser} from "angular2-meteor-accounts-ui";
+import {MeteorComponent} from 'angular2-meteor';
 
 import template from "./list.component.html";
 
@@ -21,7 +22,7 @@ interface Options extends Pagination {
     template
 })
 
-export class PatientListComponent implements OnInit, OnDestroy {
+export class PatientListComponent extends MeteorComponent implements OnInit, OnDestroy {
 
     patientsSub: Observable<any[]>;
     patients: any[];
@@ -34,10 +35,9 @@ export class PatientListComponent implements OnInit, OnDestroy {
     //autorunSub: Subscription;
     searchString: Subject<string> = new Subject<string>();
     user: Meteor.User;
-    paginationService: PaginationService;
 
-    constructor(paginationService: PaginationService, private ngZone: NgZone) {
-        this.paginationService = paginationService;
+    constructor(private paginationService: PaginationService, private ngZone: NgZone) {
+        super();
     }
 
     ngOnInit() {
@@ -59,25 +59,17 @@ export class PatientListComponent implements OnInit, OnDestroy {
                 this.patients = null;
             }
 
-            this.patientsSub = Observable.create(observer => {
-                Meteor.call("patients.find", options, searchString, (err, res)=> {
-                    if (err) {                   
-                        observer.error(err);
-                    } else {
-                        console.log("patients.find:", res);
-                        // reset pagination
-                        this.patientsSize = res.count;
-                        this.paginationService.setTotalItems(this.paginationService.defaultId, this.patientsSize);
-                        // reset data
-                        observer.next(res.data);
-                        observer.complete();
-                    }
-                });
-
-                return () => {              
-                    console.log("patientsSub unsubscribed")
-                };
-            });
+            //console.log("options:", options);
+            this.call("patients.find", options, searchString, (err, res) => {
+                //console.log("patients.find() done");
+                if (err) {
+                    console.log("error while fetching patient list:", err);
+                    return;
+                }
+                this.patients = res.data;
+                this.patientsSize = res.count;
+                this.paginationService.setTotalItems(this.paginationService.defaultId, this.patientsSize);
+            })
 
         });
 
@@ -98,36 +90,18 @@ export class PatientListComponent implements OnInit, OnDestroy {
         //this.paginationService.setTotalItems(this.paginationService.defaultId, this.patientsSize);
         });*/
 
-        this.getPatients();
-    }
-
-    getPatients() {
-        this.nameOrder.next(parseInt(document.getElementById("sortOrder").value) );
-        this.patientsSub.subscribe(patients => {
-
-            this.ngZone.run(() => {
-                this.patients = patients;
-            });
-
-        }, err =>{
-            console.error(err);
-        });
     }
 
     search(value: string): void {
-        this.curPage.next(1);
         this.searchString.next(value);
-        this.getPatients();
     }
 
     onPageChanged(page: number): void {
         this.curPage.next(page);
-        this.getPatients();
     }
 
     changeSortOrder(nameOrder: string): void {
         this.nameOrder.next(parseInt(nameOrder));
-        this.getPatients();
     }
 
     sendInvite(user: any) {
