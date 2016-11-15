@@ -9,6 +9,7 @@ import {PatientListComponent} from "./patient/list.component";
 import {PatientFormComponent} from "./patient/form.component";
 import {PatientDetailsComponent} from "./patient/details.component";
 import {PatientQuestionnaireComponent} from "./patient/questionnaire.component";
+import {PatientAgreementComponent} from "./patient/agreements.component"
 
 export const routes: Route[] = [
   { path: "", component: DashboardComponent, canActivate: ['canActivateForLoggedIn'] },
@@ -18,7 +19,8 @@ export const routes: Route[] = [
   { path: 'patients/list', component: PatientListComponent, canActivate: ['canActivateForLoggedIn'] },
   { path: 'patients/edit/:patientId', component: PatientFormComponent, canActivate: ['canActivateForLoggedIn'] },
   { path: 'patients/details/:patientId', component: PatientDetailsComponent, canActivate: ['canActivateForLoggedIn'] },
-  { path: 'patients/questionnaire/:patientId', component: PatientQuestionnaireComponent, canActivate: ['canActivateForLoggedIn'] }
+  { path: 'patients/questionnaire/:patientId', component: PatientQuestionnaireComponent, canActivate: ['canActivateForLoggedIn'] },
+  { path: 'patients/agreements/:patientId', component: PatientAgreementComponent, canActivate: ['canActivateForLoggedIn']}
 ];
 
 export const ROUTES_PROVIDERS = [{

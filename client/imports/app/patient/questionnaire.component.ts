@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import {Observable, Subscription, Subject} from "rxjs";
 import {MeteorObservable} from "meteor-rxjs";
 import { InjectUser } from "angular2-meteor-accounts-ui";
+//import { Questionnaires } from '../../../../both/collections/questionnaires.collection';
 import template from './questionnaire.component.html';
 
 @Component({
@@ -12,71 +13,36 @@ import template from './questionnaire.component.html';
 })
 @InjectUser("user")
 export class PatientQuestionnaireComponent implements OnInit {
-  patientSub: Observable<any[]>;  
-  patientId: string;
-  patient: Patient;
-  paramsSub: Subscription;
-
-  constructor(
-    private route: ActivatedRoute, 
-    private ngZone: NgZone
-  ) {}
-
-  ngOnInit() {
-    this.paramsSub = this.route.params
-        .map(params => params['patientId'])
-        .subscribe(patientId => {
-            this.patientId = patientId;
-            console.log("patientId:", patientId);
-    
-            this.patientSub = Observable.create(observer => {
-                Meteor.call("patients.findOne", patientId, (err, res)=> {
-                    if (err) {                   
-                        observer.error(err);
-                    } else {
-                        // reset data
-                        observer.next(res);
-                        observer.complete();
-                    }
-                });
-    
-                return () => {              
-                    console.log("patientSub unsubscribed")
-                };
+    questinnaires: Observable<any[]>; 
+  
+    constructor(private ngZone: NgZone) {}
+  
+    ngOnInit() {
+        this.questinnaires = Observable.create(observer => {
+            Meteor.call("findAllQuestionnaires", (err, res)=> {
+                if (err) {                   
+                    observer.error(err);
+                } else {
+                    // reset data
+                    //console.log(res,'res questionnaire');
+                    observer.next(res);
+                    observer.complete();
+                }
             });
-
-        });   
-        this.getPatient();
-  }
-
-  getPatient() {
-    this.patientSub.subscribe((patient) => {
-        this.ngZone.run(() => {
-            this.patient = patient;
         });
-    }, err =>{
-        console.error(err);
-    });
-  }
-
-  updatePatient(): void {
-    if (! Meteor.userId()) {
-      alert('Please log in to update patient.');
-      return;
+        this.getPatient();
     }
 
-    if (this.patientForm.valid) {
-      Meteor.call("patients.update", this.patientId, this.patientForm.value, (err, res) => {
-          console.log("patient.update callback");
-          if (err) {
-              console.log("error updating patient:", err);
-              return;
-          }
-          alert("Patient record updated.");
-          //this.patientForm.reset();
-      })
-      
+    getPatient() {
+        this.questinnaires.subscribe((res) => {
+            this.ngZone.run(() => {
+                this.testds = res;
+            });
+        }, err =>{
+            console.error(err);
+        });
     }
-  }
+
+  
 
 }

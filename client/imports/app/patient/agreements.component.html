@@ -1,14 +1,17 @@
 
-<div class="row" *ngIf="testds">
+<div class="row" *ngIf="patient">
     <div class="col s12">
         <div class="col s12 center">
-            <h4>Questionnaire</h4>
+            <h4>Opiate Agreements</h4>
         </div>
         <div class="col l8 m8 s8">
+            <!--<div class="col s12">{{patient.firstName}} {{patient.lastName}}</div>-->
             <div class="input-field col s12">
                 <select class="browser-default">
-                    <option value="">Select Questionnaire</option>
-                    <option *ngFor="let user of testds" value="{{user._id}}">{{user.title}}</option>                    
+                    <option value="">Select Agreements</option>
+                    <option value="1">Option 1</option>
+                    <option value="2">Option 2</option>
+                    <option value="3">Option 3</option>
                 </select>
             </div>
         </div>
@@ -16,17 +19,17 @@
             <a href="" class="waves-effect waves-light btn">Send</a>
         </div>
     </div>
-    <div class="col s12"><hr></div>
+    <hr>
     <div class="col s10">
         <table class="bordered">
             <thead>
-                <tr>
+              <tr>
                     <th data-field="id">Name</th>
                     <th data-field="name">Date</th>
                     <th data-field="price">Result</th>
                     <th data-field="price">Status</th>
                     <th data-field="price">Details</th>
-                </tr>
+              </tr>
             </thead>
     
             <tbody>

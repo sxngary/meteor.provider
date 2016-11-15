@@ -26,7 +26,7 @@ export class PatientDetailsComponent implements OnInit {
         .map(params => params['patientId'])
         .subscribe(patientId => {
             this.patientId = patientId;
-            console.log("patientId:", patientId);
+            //console.log("patientId:", patientId);
     
             this.patientSub = Observable.create(observer => {
                 Meteor.call("patients.findOne", patientId, (err, res)=> {
@@ -39,9 +39,9 @@ export class PatientDetailsComponent implements OnInit {
                     }
                 });
     
-                return () => {              
-                    console.log("patientSub unsubscribed")
-                };
+                //return () => {              
+                //    console.log("patientSub unsubscribed")
+                //};
             });
 
         });   
