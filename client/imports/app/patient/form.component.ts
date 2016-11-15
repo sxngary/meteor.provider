@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import {Observable, Subscription, Subject} from "rxjs";
 import {MeteorObservable} from "meteor-rxjs";
+import {MeteorComponent} from 'angular2-meteor';
 import { Patients } from '../../../../both/collections/csvs.collection';
 import { Patient } from "../../../../both/models/csv.model";
 import { InjectUser } from "angular2-meteor-accounts-ui";
@@ -14,7 +15,7 @@ import template from './form.component.html';
   styles: [ ]
 })
 @InjectUser("user")
-export class PatientFormComponent implements OnInit {
+export class PatientFormComponent extends MeteorComponent implements OnInit {
   patientSub: Observable<any[]>;
   patientForm: FormGroup;
   patientId: string;
@@ -25,7 +26,9 @@ export class PatientFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute, 
     private ngZone: NgZone
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit() {
     this.paramsSub = this.route.params
@@ -34,38 +37,11 @@ export class PatientFormComponent implements OnInit {
         this.patientId = patientId;
         console.log("patientId:", patientId);
 
-        this.patientSub = Observable.create(observer => {
-            Meteor.call("patients.findOne", patientId, (err, res)=> {
-                if (err) {                   
-                    observer.error(err);
-                } else {
-                    // reset data
-                    observer.next(res);
-                    observer.complete();
-                }
-            });
-
-            return () => {              
-                console.log("patientSub unsubscribed")
-            };
-        });
-
-      });
-    
-    /*this.patient = {
-        firstName: "Rahul",
-        lastName: "Sethi",
-        address: "E-37 Phase 8 Industrial area",
-        company: "SmartData Enterprises",
-        phoneNum: 9814012345
-    };*/
-    this.getPatient();
-  }
-
-  getPatient() {
-    this.patientSub.subscribe((patient) => {
-
-        this.ngZone.run(() => {
+        this.call("patients.findOne", patientId, (err, patient) => {
+            if (err) {
+                console.log("error while fetching patient:", err);
+                return;
+            }
             this.patient = patient;
             this.patientForm = this.formBuilder.group({
             firstName: [patient.firstName, Validators.required],
@@ -76,9 +52,7 @@ export class PatientFormComponent implements OnInit {
             });
         });
 
-    }, err =>{
-        console.error(err);
-    });
+      });
   }
 
   updatePatient(): void {
