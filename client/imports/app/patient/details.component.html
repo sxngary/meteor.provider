@@ -1,0 +1,68 @@
+
+<div class="row" *ngIf="patient">
+    <div class="col s12">
+        <div class="col s12 center">
+            <h4>Patient Details</h4>
+        </div>
+        <div class="col l8 m8 s8">
+            <div class="col s12">{{patient.firstName}} {{patient.lastName}}</div>
+            <div class="col s12">{{patient.email}} </div>
+            <div class="col s12">{{patient.phoneNum}} </div>
+        </div>
+        <div class="col l4 m4 s4">
+            <a [routerLink]="['/patients/edit', patient._id]" class="waves-effect waves-light btn">Edit Patient</a>
+        </div>
+        <div class="mt40">
+            <div class="col l6 m6 s12 ">
+                <strong> Personal Id : </strong> {{patient.personalId}}
+            </div>
+            <div class="col l6 m6 s12">
+                <strong> Group Id :</strong> {{patient.groupId}}
+            </div>
+            <div class="col l6 m6 s12">
+                <strong> Company : </strong> {{patient.company}}
+            </div>
+            <div class="col l6 m6 s12">
+                <strong> Address : </strong> {{patient.address}}
+            </div>
+            <div class="col l6 m6 s12">
+                <strong>Insurer : </strong> {{patient.insurer}}
+            </div>
+            <div class="col l6 m6 s12">
+                <strong> Guarantor : </strong> {{patient.guarantor}}
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="">
+        <div class="col l6 m6 s12">
+            <a href="">Request for lab order</a>
+            <hr>
+        </div>
+        <div class="col l6 m6 s12">
+            <a href="">Lab test results</a>
+            <hr>
+        </div>
+        <div class="col l6 m6 s12">
+            <a href="">Send opiate agreements</a>
+            <hr>
+        </div>
+        <div class="col l6 m6 s12">
+            <a [routerLink]="['/patients/questionnaire', patient._id]">Assign survey</a>
+            <hr>
+        </div>
+        <div class="col l6 m6 s12">
+            <a href="">Assign knowledge base</a>
+            <hr>
+        </div>
+        <div class="col l6 m6 s12">
+            <a href="">Set pharmacy</a>
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div [hidden]="user">
+            Please login in order to update patient.
+        </div>
+    </div>
+</div>

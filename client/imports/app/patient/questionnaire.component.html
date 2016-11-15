@@ -1,0 +1,65 @@
+
+<div class="row" *ngIf="patient">
+    <div class="col s12">
+        <div class="col s12 center">
+            <h4>Questionnaire</h4>
+        </div>
+        <div class="col l8 m8 s8">
+            <!--<div class="col s12">{{patient.firstName}} {{patient.lastName}}</div>-->
+            <div class="input-field col s12">
+                <select class="browser-default">
+                    <option value="">Select Questionnaire</option>
+                    <option value="1">Option 1</option>
+                    <option value="2">Option 2</option>
+                    <option value="3">Option 3</option>
+                </select>
+            </div>
+        </div>
+        <div class="col l4 m4 s4">
+            <a href="" class="waves-effect waves-light btn">Send</a>
+        </div>
+    </div>
+    <hr>
+    <div class="col s10">
+        <table class="bordered">
+            <thead>
+              <tr>
+                    <th data-field="id">Name</th>
+                    <th data-field="name">Date</th>
+                    <th data-field="price">Result</th>
+                    <th data-field="price">Status</th>
+                    <th data-field="price">Details</th>
+              </tr>
+            </thead>
+    
+            <tbody>
+                <tr>
+                  <td>Lifescore</td>
+                  <td>10/11/2016</td>
+                  <td>18/24</td>
+                  <td>Pass</td>
+                  <td>view</td>
+                </tr>
+                <tr>
+                  <td>Lifescore</td>
+                  <td>10/11/2016</td>
+                  <td>18/24</td>
+                  <td>Pass</td>
+                  <td>view</td>
+                </tr>
+                <tr>
+                  <td>Lifescore</td>
+                  <td>10/11/2016</td>
+                  <td>18/24</td>
+                  <td>Pass</td>
+                  <td>view</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div [hidden]="user">
+            Please login in order to update patient.
+        </div>
+    </div>
+</div>

@@ -27,7 +27,7 @@
         <div class="col s12 m12">
             <div class="card indigo lighten-1">
                 <div class="card-content white-text">
-                    <span class="card-title">{{user.patient.firstName}} {{user.patient.lastName}}</span>
+                    <a [routerLink]="['/patients/details', user.patient._id]"><span class="card-title">{{user.patient.firstName}} {{user.patient.lastName}}</span></a>
                         <ul>
                             <li><label>#ID</label>: {{user._id}}</li>
                             <li><label>Email</label>: {{user.patient.email}}</li>
