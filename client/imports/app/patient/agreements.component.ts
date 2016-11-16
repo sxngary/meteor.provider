@@ -6,7 +6,7 @@ import { InjectUser } from "angular2-meteor-accounts-ui";
 import template from './agreements.component.html';
 
 @Component({
-  selector: 'patient-questionnaire',
+  selector: 'patient-agreement',
   template,
   styles: [ ]
 })
@@ -21,7 +21,7 @@ export class PatientAgreementComponent implements OnInit {
 
     ngOnInit() {
         this.patientSub = Observable.create(observer => {
-            Meteor.call("patients.findOne", patientId, (err, res)=> {
+            Meteor.call("findAllQuestionnaires", (err, res)=> {
                 if (err) {                   
                     observer.error(err);
                 } else {
@@ -47,24 +47,6 @@ export class PatientAgreementComponent implements OnInit {
     });
   }
 
-  updatePatient(): void {
-    if (! Meteor.userId()) {
-      alert('Please log in to update patient.');
-      return;
-    }
-
-    if (this.patientForm.valid) {
-      Meteor.call("patients.update", this.patientId, this.patientForm.value, (err, res) => {
-          console.log("patient.update callback");
-          if (err) {
-              console.log("error updating patient:", err);
-              return;
-          }
-          alert("Patient record updated.");
-          //this.patientForm.reset();
-      })
-      
-    }
-  }
+  
 
 }
