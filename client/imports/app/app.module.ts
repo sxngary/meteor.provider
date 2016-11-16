@@ -6,6 +6,8 @@ import { AccountsModule } from 'angular2-meteor-accounts-ui';
 import { Ng2PaginationModule } from 'ng2-pagination';
 
 import { AppComponent } from "./app.component.web";
+import { LandingComponent } from "./landing.component.web";
+import { MainLayoutComponent } from "./main.layout.web";
 import { routes, ROUTES_PROVIDERS } from './app.routes';
 import { SHARED_DECLARATIONS } from './shared';
 import {AUTH_DECLARATIONS} from "./auth/index";
@@ -26,6 +28,8 @@ moduleDefinition = {
   ],
   declarations: [
     AppComponent,
+    LandingComponent,
+    MainLayoutComponent,
     ...SHARED_DECLARATIONS,
     ...AUTH_DECLARATIONS,
     ...DASHBOARD_DECLARATIONS

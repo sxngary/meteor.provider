@@ -1,34 +1,132 @@
-<div class="row">
-    <div class="col s4">&nbsp;</div>
-    <div class="col s2">
-        <a [routerLink]="['patients/list']"><i class="large material-icons">insert_chart</i></a>
+<section class="top-content">
+    <div class="col s4 padding-left">
+        <div class="card">
+            <div class="card-content">
+                <h4>Total <span class="block">Patient</span></h4>
+                <div class="total-pt">
+                    <div class="content-circle orange-bdr valign-wrapper"> <span class="valign">566</span> </div>
+                </div>
+                <div class="right-align hide-sm active-inactive valign-wrapper">
+                    <div class="valign">
+                        <p>Active<span>466</span></p>
+                        <p>Inactive<span>100</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col s2">
-        <i class="large material-icons">redeem</i>
+    <div class="col s4 padding-left">
+        <div class="card">
+            <div class="card-content">
+                <h4>Send <span class="block">Agreements</span></h4>
+                <div class="total-pt">
+                    <div class="content-circle green-bdr valign-wrapper"> <span class="valign">43</span> </div>
+                </div>
+                <div class="right-align hide-sm active-inactive valign-wrapper">
+                    <div class="valign">
+                        <p>Signed<span>27</span></p>
+                        <p>Pending<span>16</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col s4">&nbsp;</div>
-</div>
+    <div class="col s4 padding-left">
+        <div class="card">
+            <div class="card-content">
+                <h4>Lab <span class="block">Test</span></h4>
+                <div class="total-pt">
+                    <div class="content-circle blue-bdr valign-wrapper"> <span class="valign">17</span> </div>
+                </div>
+                <div class="right-align hide-sm active-inactive valign-wrapper">
+                    <div class="valign">
+                        <p>Awaited<span>466</span></p>
+                        <p>Completed<span>100</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="datalist">
+    <section class="databox">
+        <section class="box red"> <a href="javascript:void(0);" [routerLink]="['patients/list']" class="waves-effect waves-circle btn"><i class="zmdi zmdi-male-alt"></i>
+            <h3>Patient</h3></a>
+        </section>
+    </section>
+    
+    <section class="databox">
+        <section class="box green"><a class="waves-effect waves-circle btn" href="#"> <i class="zmdi zmdi-book-image"></i>
+            <h3>Knowledge Base</h3></a>
+        </section>
+    </section>
+    
+    <section class="databox hide-big">
+        <section class="box seeblue"><a class="waves-effect waves-circle btn" href="#"> <i class="zmdi zmdi-rss"></i>
+            <h3>NewsFeed</h3></a>
+        </section>
+    </section>
+    
+    <section class="databox">
+        <section class="box blue"><a class="waves-effect waves-circle btn" href="#"> <i class="zmdi zmdi-chart"></i>
+            <h3>Assessments</h3></a>
+        </section>
+    </section>
+    
+    <section class="databox">
+        <section class="box yellow"><a class="waves-effect waves-circle btn" href="#"><i class="zmdi zmdi-laptop"></i>
+            <h3>PMP Platform</h3></a>
+        </section>
+    </section>
+    
+    <section class="databox">
+        <section class="box seegreen"><a class="waves-effect waves-circle btn" href="#"> <i class="zmdi zmdi-account"></i>
+          <h3>My Account</h3></a>
+        </section>
+    </section>
+</section>
+<section class="chart-pt col s12 hide-sm"> <img src="images/chart.png" class="responsive-img" alt=""/> </section>
+<section class="assigmnet hide-sm">
+    <section class="col s6 m7 l8">
+        <section class="assigm-box bt-shadow">
+            <h2>Assessments</h2>
+            <ul>
+                <li>
+                    <p class="assign-title"><a href="#">Patients with Pain</a></p>
+                    <p class="assign-content">The Screener and Opioid Assessment for Patients with Pain (SOAPP)® Version 1.0 is a tool for clinicians to help determine how much monitoring a patient on long-term opioid</p>
+                </li>
+                <li>
+                    <p class="assign-title"><a href="#">Patients with Pain</a></p>
+                    <p class="assign-content">The Screener and Opioid Assessment for Patients with Pain (SOAPP)® Version 1.0 is a tool for clinicians to help determine how much monitoring a patient on long-term opioid</p>
+                </li>
+                <li>
+                    <p class="assign-title"><a href="#">Patients with Pain</a></p>
+                    <p class="assign-content">The Screener and Opioid Assessment for Patients with Pain (SOAPP)® Version 1.0 is a tool for clinicians to help determine how much monitoring a patient on long-term opioid</p>
+                </li>
+            </ul>
+            <span class="seeall"><a href="#">See all....</a></span>
+        </section>
+    </section>
+    <section class="col s6 m5 l4">
+        <section class="news-box bt-shadow">
+            <h2>News Feed</h2>
+            <ul>
+                <li> <i class="zmdi zmdi-accounts-alt"></i>
+                    <p class="newstitle">Agreement Name</p>
+                    <p class="newscontent">Lorem Ipsum is simply dummy text of the printing </p>
+                </li>
+                <li> <i class="zmdi zmdi-plus-square"></i>
+                    <p class="newstitle">Lab Result</p>
+                    <p class="newscontent">Lorem Ipsum is simply dummy text of the printing </p>
+                </li>
+                <li> <i class="zmdi zmdi-account"></i>
+                    <p class="newstitle">John Doe</p>
+                    <p class="newscontent">Lorem Ipsum is simply dummy text of the printing </p>
+                </li>
+            </ul>
+            <span class="seeall"><a href="#">See all....</a></span>
+        </section>
+    </section>
+</section>
 
-<div class="row">
-    <div class="col s4">&nbsp;</div>
-    <div class="col s2">
-        <i class="large material-icons">insert_chart</i>
-    </div>
-    <div class="col s2">
-        <i class="large material-icons">redeem</i>
-    </div>
-    <div class="col s4">&nbsp;</div>
-</div>
-
-<div class="row">
-    <div class="col s4">&nbsp;</div>
-    <div class="col s2">
-        <i class="large material-icons">insert_chart</i>
-    </div>
-    <div class="col s2">
-        <i class="large material-icons">redeem</i>
-    </div>
-    <div class="col s4">&nbsp;</div>
-</div>
-
-<csv-upload #upload></csv-upload>
+<!--<csv-upload #upload></csv-upload>-->

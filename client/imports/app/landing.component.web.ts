@@ -1,14 +1,14 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router'
-import template from './app.component.web.html';
+import template from './landing.component.web.html';
 import {InjectUser} from "angular2-meteor-accounts-ui";
 
 @Component({
-    selector: 'app',
+    selector: 'landing',
     template
 })
 @InjectUser('user')
-export class AppComponent implements AfterViewInit {
+export class LandingComponent implements AfterViewInit {
     constructor(private router: Router) {}
   
     ngAfterViewInit() {

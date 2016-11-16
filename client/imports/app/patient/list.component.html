@@ -1,51 +1,56 @@
-<div class="patients-list-container">
-  <div class="patients-list">
-
-    <div class="row">
-        <div class="col s12 m12">
-            <div class="card indigo darken-1">
-                <div class="card-content white-text">
-                    <span class="card-title"><h3>Filter Patients</h3></span>
-                    <form>
-                        Search: <input type="text" #searchtext placeholder="Type anything"></input>
-                        <br />
-                        Sort by name:
-                        <select id="sortOrder" class="form-control browser-default" #sort (change)="changeSortOrder(sort.value)">
-                        <option value="1" selected>Ascending</option>
-                        <option value="-1">Descending</option>
-                        </select>
-                        <button class="btn" (click)="search(searchtext.value)">Submit</button>
-                    </form>
-                </div>
+<!--<div class="row">
+    <div class="col s12 m12">
+        <div class="card indigo darken-1">
+            <div class="card-content white-text">
+                <span class="card-title"><h3>Filter Patients</h3></span>
+                <form>
+                    Search: <input type="text" #searchtext placeholder="Type anything"></input>
+                    <br />
+                    Sort by name:
+                    <select id="sortOrder" class="form-control browser-default" #sort (change)="changeSortOrder(sort.value)">
+                    <option value="1" selected>Ascending</option>
+                    <option value="-1">Descending</option>
+                    </select>
+                    <button class="btn" (click)="search(searchtext.value)">Submit</button>
+                </form>
             </div>
         </div>
     </div>
+</div>-->
 
-    <pagination-controls class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
+<section class="serach-bg">
+    <section class="search col s10">
+        <input id="search" type="search" #searchtext class="col s12" placeholder="Search here..."/>
+        <label for="search"><i class="material-icons">search</i></label>
+    </section>
+    <section class="download-btn">
+        <a class="waves-effect waves-light btn"><i class="zmdi zmdi-download"></i>CSV Import</a>
+    </section>
+</section>
 
-    <div class="row" *ngFor="let user of patients">
-        <div class="col s12 m12">
-            <div class="card indigo lighten-1">
-                <div class="card-content white-text">
-                    <a [routerLink]="['/patients/details', user.patient._id]"><span class="card-title">{{user.patient.firstName}} {{user.patient.lastName}}</span></a>
-                        <ul>
-                            <li><label>#ID</label>: {{user._id}}</li>
-                            <li><label>Email</label>: {{user.patient.email}}</li>
-                            <li><label>Dob</label>: {{user.patient.dob}}</li>
-                            <li><label>Phone</label>: {{user.patient.phoneNum}}</li>
-                            <li><label>Company</label>: {{user.patient.company}}</li>
-                            <li><label>Address</label>: {{user.patient.address}}</li>
-                        </ul>
-                </div>
-                <div class="card-action">
-                    <a [routerLink]="['/patients/edit', user.patient._id]">Edit</a>
-                    <a href="javascript:;" (click)="sendInvite(user)" style="cursor:pointer;">Invite</a>
-                    <a [routerLink]="['/patients/delete', user.patient._id]">Remove</a>
-                </div>
-            </div>
-        </div>
-    </div>
+<pagination-controls class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
 
-    <pagination-controls class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
-  </div>
-</div>
+<section class="col s12 wht-bg mar-tp5 mar-bt5 bt-shadow"  *ngFor="let user of patients">
+    <section class="pateint-list">
+        <section class="col s2 pateint-pic"> <img class="responsive-img" src="images/pic1.png" alt=""/> </section>
+        <section class="col s6 mar-tp10">
+            <h2 class="pateint-name"><a [routerLink]="['/patients/details', user.patient._id]">{{user.patient.firstName}} {{user.patient.lastName}}</a></h2>
+            <ul class="pateint-deatil">
+                <li class="feamle-lt"><i><img src="images/feamle-ic.png" alt=""/></i> Female</li>
+                <li><i class="zmdi zmdi-walk"></i> {{user.patient.dob}}</li>
+            </ul>
+            <address class="col s12">
+                <i class="zmdi zmdi-pin"></i> {{user.patient.address}}
+            </address>
+        </section>
+        <section class="col s4 detail-btn">
+            <ul>
+                <li><a class="btn-floating waves-effect waves-light green" href="javascript:void(0);"><i class="material-icons">email</i></a></li>
+                <li><a class="btn-floating  waves-effect waves-light blue" href="javascript:void(0);" [routerLink]="['/patients/edit', user.patient._id]"><i class="material-icons">mode_edit</i></a></li>
+                <li><a class="btn-floating waves-effect waves-light red" href="javascript:void(0);" [routerLink]="['/patients/delete', user.patient._id]"><i class="material-icons">delete</i></a></li>
+            </ul>
+        </section>
+    </section>
+</section>
+
+<pagination-controls class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
