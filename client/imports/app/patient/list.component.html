@@ -51,7 +51,7 @@
             <ul>
                 <li><a class="btn-floating waves-effect waves-light green" href="javascript:void(0);" (click)="sendInvite(user)"><i class="material-icons">email</i></a></li>
                 <li><a class="btn-floating waves-effect waves-light blue" href="javascript:void(0);" [routerLink]="['/patients/edit', user.patient._id]"><i class="material-icons">mode_edit</i></a></li>
-                <li><a class="btn-floating waves-effect waves-light red" href="javascript:void(0);" (click)="deletePatient(user)"><i class="material-icons">delete</i></a></li>
+                <li *ngIf="!user.status.isDeleted"><a class="btn-floating waves-effect waves-light red" href="javascript:void(0);" (click)="deletePatient(user)"><i class="material-icons">delete</i></a></li>
             </ul>
         </section>
     </section>

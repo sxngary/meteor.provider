@@ -7,6 +7,16 @@
       <form class="col s12" [formGroup]="signupForm" #f="ngForm" (ngSubmit)="signup()">
 
         <div class="input-field col s12">
+          <input formControlName="firstName" type="text"></input>
+          <label>First Name</label>
+        </div>
+
+        <div class="input-field col s12">
+          <input formControlName="lastName" type="text"></input>
+          <label>Last Name</label>
+        </div>
+
+        <div class="input-field col s12">
           <input formControlName="email" type="email"></input>
           <label>Email</label>
         </div>

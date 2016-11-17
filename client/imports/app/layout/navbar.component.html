@@ -1,7 +1,7 @@
 <ul id="nav-mobile" class="side-nav left-bar fixed">
     <li class="admin-pro">
     <img src="images/admin.png" alt=""/>
-    <h2>John Doe</h2>
+    <h2>{{user.profile.firstName}} {{user.profile.lastName}}</h2>
     </li>
     <li class="bold"><a href="javascript:void(0);" [routerLink]="['/dashboard']" class="waves-effect waves-tea"><i class="zmdi zmdi-view-dashboard"></i> Dashboard</a></li>
     <ul class="collapsible collapsible-accordion">
