@@ -5,6 +5,7 @@ import {PaginationService} from "ng2-pagination";
 import {MeteorObservable} from "meteor-rxjs";
 import {InjectUser} from "angular2-meteor-accounts-ui";
 import {MeteorComponent} from 'angular2-meteor';
+import {showAlert} from "../shared/show-alert";
 
 import template from "./list.component.html";
 
@@ -63,7 +64,8 @@ export class PatientListComponent extends MeteorComponent implements OnInit, OnD
             this.call("patients.find", options, searchString, (err, res) => {
                 //console.log("patients.find() done");
                 if (err) {
-                    console.log("error while fetching patient list:", err);
+                    //console.log("error while fetching patient list:", err);
+                    showAlert("Error while fetching patient list.", "danger");
                     return;
                 }
                 this.patients = res.data;
@@ -107,10 +109,23 @@ export class PatientListComponent extends MeteorComponent implements OnInit, OnD
     sendInvite(user: any) {
         Meteor.call("patient.sendInvite", user._id, (err, res) => {
             if (err) {
-                console.log("error calling patient.sendInvite");
+                //console.log("error calling patient.sendInvite");
+                showAlert("Error calling patient.sendInvite", "danger");
                 return;
             }
-            alert("Invite sent to Patient.")
+            showAlert("Invite sent to patient.", "success");
+        })
+    }
+
+    deletePatient(user: any) {
+        Meteor.call("patient.remove", user.patient._id, (err, res) => {
+            if (err) {
+                //console.log("error calling patient.remove");
+                showAlert("Error calling patient.remove", "danger");
+                return;
+            }
+            user.status.isDeleted = true;            
+            showAlert("Patient has been removed.", "info");
         })
     }
 

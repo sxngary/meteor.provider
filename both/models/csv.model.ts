@@ -28,4 +28,7 @@ export interface Patient extends CollectionObject {
     insurer: string;
     guarantor: string;
     userId?: string;
+    status?: {
+        isDeleted: boolean;
+    };
 }

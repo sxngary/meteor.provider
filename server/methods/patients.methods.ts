@@ -90,7 +90,7 @@ Meteor.methods({
         }
     },
     "patients.find": (options: Options, searchString: String) => {
-        let where = {"type": "patient"};
+        let where = {"type": "patient", "status.isDeleted": false};
         if (typeof searchString === 'string' && searchString.length) {
             where["patient.firstName"] = {
                 $regex: `.*${searchString}.*`,
@@ -99,7 +99,7 @@ Meteor.methods({
         }
 
         _.extend(options, {
-            fields: {"emails.address": 1, "patient": 1, "createdAt": 1}
+            fields: {"emails.address": 1, "patient": 1, "createdAt": 1, "status": 1}
         });
 
         //console.log("where:", where);
@@ -158,5 +158,44 @@ Meteor.methods({
 
         // send email
         Accounts.sendEnrollmentEmail(userId);
+    },
+    "patient.remove": (patientId: String) => {
+        // check patient row
+        let patient = Patients.collection.findOne({_id: patientId});
+        if (typeof patient == "undefined" || typeof patient._id == "undefined") {
+            throw new Meteor.Error(403, "Invalid patientId passed.");
+        }
+        
+        // update patient row
+        if (typeof patient.status == "undefined") {
+            patient.status = {
+                isDeleted: true
+            };
+        } else {
+            patient.status.isDeleted = true;
+        }
+        Patients.collection.update({_id: patientId}, {$set: {status: patient.status}});
+
+        // check user reference
+        if (typeof patient.userId == "undefined") {
+            return;
+        }
+
+        // check user object
+        let user:any = Meteor.users.findOne({_id: patient.userId});
+        if (typeof user == "undefined") {
+            return;
+        }
+
+        // update user profile
+        if (typeof user.status == "undefined") {
+            user.status = {
+                isDeleted: true
+            };
+        } else {
+            user.status.isDeleted = true;
+        }
+        Meteor.users.update({_id: patient.userId, type: "patient"}, {$set: {status: user.status} });
+        return;
     }
 })
