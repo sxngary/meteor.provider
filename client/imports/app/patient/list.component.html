@@ -20,11 +20,12 @@
 
 <section class="serach-bg">
     <section class="search col s10">
-        <input id="search" type="search" #searchtext class="col s12" placeholder="Search here..."/>
-        <label for="search"><i class="material-icons">search</i></label>
+        <input id="search" type="text" #searchtext class="col s12" placeholder="Search here..."/>
+        <label for="search" (click)="search(searchtext.value)"><i class="material-icons">search</i></label>
     </section>
     <section class="download-btn">
-        <a class="waves-effect waves-light btn"><i class="zmdi zmdi-download"></i>CSV Import</a>
+        <!--<a class="waves-effect waves-light btn"><i class="zmdi zmdi-download"></i>CSV Import</a>-->
+        <csv-upload></csv-upload>
     </section>
 </section>
 

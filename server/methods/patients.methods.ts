@@ -14,7 +14,7 @@ Meteor.methods({
     "patients.insert": (data) => {
         // insert patient
         let patientId = Patients.collection.insert(data);
-        console.log("patientId:", patientId);
+        //console.log("patientId:", patientId);
 
         // insert user
         data._id = patientId;
@@ -80,7 +80,7 @@ Meteor.methods({
         
         // now insert user
         let user = Meteor.call("createUser", userData);
-        console.log("inserted user:", user);
+        //console.log("inserted user:", user);
 
         // update userId into patient object
         if (user && user.id) {
