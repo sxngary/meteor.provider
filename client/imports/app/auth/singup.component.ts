@@ -28,7 +28,8 @@ export class SignupComponent implements OnInit {
     if (this.signupForm.valid) {
       Accounts.createUser({
         email: this.signupForm.value.email,
-        password: this.signupForm.value.password
+        password: this.signupForm.value.password,
+        type: "provider"
       }, (err) => {
         if (err) {
           this.zone.run(() => {
