@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
             this.error = err;
           });
         } else {
-          this.router.navigate(['/']);
+          this.router.navigate(['/dashboard']);
         }
       });
     }

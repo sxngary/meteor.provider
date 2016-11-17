@@ -3,7 +3,7 @@
     <img src="images/admin.png" alt=""/>
     <h2>John Doe</h2>
     </li>
-    <li class="bold"><a href="javascript:void(0);" [routerLink]="['']" class="waves-effect waves-tea"><i class="zmdi zmdi-view-dashboard"></i> Dashboard</a></li>
+    <li class="bold"><a href="javascript:void(0);" [routerLink]="['/dashboard']" class="waves-effect waves-tea"><i class="zmdi zmdi-view-dashboard"></i> Dashboard</a></li>
     <ul class="collapsible collapsible-accordion">
         <li class="bold"><a href="javascript:void(0);" class="collapsible-header  waves-effect"><i class="zmdi zmdi-plus-square"></i> Patient<span><i class="zmdi zmdi-chevron-right"></i></span></a>
         <section class="collapsible-body">
@@ -19,7 +19,7 @@
     <li class="bold"><a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-chart"></i> Assessments</a></li>
     <li class="bold"><a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-laptop"></i> PMP Platform</a></li>
     <li class="bold"><a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-account"></i> My Account</a></li>
-    <li class="bold"><a href="javascript:void(0);" [hidden]="!user"><a (click)="logout()" class="waves-effect">
+    <li class="bold"><a href="javascript:void(0);" class="waves-effect" [hidden]="!user" (click)="logout()">
         <i class="zmdi zmdi-lock"></i> Logout</a>
     </li>
 </ul>

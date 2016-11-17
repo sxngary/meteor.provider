@@ -5,6 +5,7 @@ import {PatientFormComponent} from "../patient/form.component";
 import {PatientDetailsComponent} from "../patient/details.component";
 import {PatientQuestionnaireComponent} from "../patient/questionnaire.component";
 import {PatientAgreementComponent} from "../patient/agreements.component";
+import {LandingComponent} from "../layout/landing.component";
 
 export const DASHBOARD_DECLARATIONS = [
     DashboardComponent,
@@ -13,5 +14,6 @@ export const DASHBOARD_DECLARATIONS = [
     PatientFormComponent,
     PatientDetailsComponent,
     PatientQuestionnaireComponent,
-    PatientAgreementComponent
+    PatientAgreementComponent,
+    LandingComponent
 ]
