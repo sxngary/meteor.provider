@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" *ngIf="false">
     <div class="col s3">&nbsp;</div>
     <div class="col s6 valign-wrapper" style="height: 200px;background-color: #ccc;" 
       fileDrop
@@ -12,4 +12,14 @@
         </div>
     </div>
     <div class="col s3">&nbsp;</div>
+</div>
+
+<div class="file-field input-field" style="margin-top: 0;">
+  <div class="btn blue darken-2" style="height: 39px; color: #fff;">
+    <span>Upload CSV</span>
+    <input type="file" (change)="onFileSelect($event)">
+  </div>
+  <!--<div class="file-path-wrapper">
+    <input class="file-path validate" type="text">
+  </div>-->
 </div>

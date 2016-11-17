@@ -20,24 +20,28 @@
 
 <section class="serach-bg">
     <section class="search col s10">
-        <input id="search" type="search" #searchtext class="col s12" placeholder="Search here..."/>
-        <label for="search"><i class="material-icons">search</i></label>
+        <input id="search" type="text" #searchtext class="col s12" placeholder="Search here..."/>
+        <label for="search" (click)="search(searchtext.value)"><i class="material-icons">search</i></label>
     </section>
     <section class="download-btn">
-        <a class="waves-effect waves-light btn"><i class="zmdi zmdi-download"></i>CSV Import</a>
+        <!--<a class="waves-effect waves-light btn"><i class="zmdi zmdi-download"></i>CSV Import</a>-->
+        <csv-upload></csv-upload>
     </section>
 </section>
 
 <pagination-controls class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
 
-<section class="col s12 wht-bg mar-tp5 mar-bt5 bt-shadow"  *ngFor="let user of patients">
+<section class="col s12 wht-bg mar-tp5 mar-bt5 bt-shadow" 
+*ngFor="let user of patients" 
+[attr.data-patient-id]="user.patient._id"
+[ngClass]="{'red accent-1': user.status.isDeleted}">
     <section class="pateint-list">
         <section class="col s2 pateint-pic"> <img class="responsive-img" src="images/pic1.png" alt=""/> </section>
         <section class="col s6 mar-tp10">
             <h2 class="pateint-name"><a [routerLink]="['/patients/details', user.patient._id]">{{user.patient.firstName}} {{user.patient.lastName}}</a></h2>
             <ul class="pateint-deatil">
                 <li class="feamle-lt"><i><img src="images/feamle-ic.png" alt=""/></i> Female</li>
-                <li><i class="zmdi zmdi-walk"></i> {{user.patient.dob}}</li>
+                <li><i class="zmdi zmdi-walk"></i> {{user.patient.dob | date}}</li>
             </ul>
             <address class="col s12">
                 <i class="zmdi zmdi-pin"></i> {{user.patient.address}}
@@ -45,9 +49,9 @@
         </section>
         <section class="col s4 detail-btn">
             <ul>
-                <li><a class="btn-floating waves-effect waves-light green" href="javascript:void(0);"><i class="material-icons">email</i></a></li>
-                <li><a class="btn-floating  waves-effect waves-light blue" href="javascript:void(0);" [routerLink]="['/patients/edit', user.patient._id]"><i class="material-icons">mode_edit</i></a></li>
-                <li><a class="btn-floating waves-effect waves-light red" href="javascript:void(0);" [routerLink]="['/patients/delete', user.patient._id]"><i class="material-icons">delete</i></a></li>
+                <li><a class="btn-floating waves-effect waves-light green" href="javascript:void(0);" (click)="sendInvite(user)"><i class="material-icons">email</i></a></li>
+                <li><a class="btn-floating waves-effect waves-light blue" href="javascript:void(0);" [routerLink]="['/patients/edit', user.patient._id]"><i class="material-icons">mode_edit</i></a></li>
+                <li><a class="btn-floating waves-effect waves-light red" href="javascript:void(0);" (click)="deletePatient(user)"><i class="material-icons">delete</i></a></li>
             </ul>
         </section>
     </section>
