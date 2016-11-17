@@ -1,18 +1,21 @@
 
 <div class="row" *ngIf="patient">
     <div class="col s12">
-        <div class="col s12 center">
-            <h4>Patient Details</h4>
+        <div class="row" >
+            <div class="col s12 center">
+                <h4>Patient Details</h4>
+            </div>
+            <section class="col s2 pateint-pic"> <img class="responsive-img" src="images/pic1.png" alt=""/> </section>
+            <div class="col s8">
+                <div class="col s12">{{patient.firstName}} {{patient.lastName}}</div>
+                <div class="col s12">{{patient.email}} </div>
+                <div class="col s12">{{patient.phoneNum}} </div>
+            </div>
+            <div class="col s2">
+                <a [routerLink]="['/patients/edit', patient._id]" class="waves-effect waves-light btn">Edit Patient</a>
+            </div>
         </div>
-        <div class="col l8 m8 s8">
-            <div class="col s12">{{patient.firstName}} {{patient.lastName}}</div>
-            <div class="col s12">{{patient.email}} </div>
-            <div class="col s12">{{patient.phoneNum}} </div>
-        </div>
-        <div class="col l4 m4 s4">
-            <a [routerLink]="['/patients/edit', patient._id]" class="waves-effect waves-light btn">Edit Patient</a>
-        </div>
-        <div class="mt40">
+        <div class="row">
             <div class="col l6 m6 s12 ">
                 <strong> Personal Id : </strong> {{patient.personalId}}
             </div>
@@ -34,7 +37,7 @@
         </div>
     </div>
     <hr>
-    <div class="">
+    <div class="col s12">
         <div class="col l6 m6 s12">
             <a href="">Request for lab order</a>
             <hr>
