@@ -1,20 +1,25 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router'
-import template from './landing.component.web.html';
+import template from './navbar.component.html';
 import {InjectUser} from "angular2-meteor-accounts-ui";
 
 @Component({
-    selector: 'landing',
+    selector: 'navbar',
     template
 })
 @InjectUser('user')
-export class LandingComponent implements AfterViewInit {
+export class NavBarComponent implements AfterViewInit {
     constructor(private router: Router) {}
   
+    logout() {
+        Meteor.logout();
+        this.router.navigate( ['/login'] );
+    }
+    
     ngAfterViewInit() {
         jQuery(function($){
             $(".button-collapse").sideNav();
-            $('select').material_select();
+            $('.collapsible').collapsible();
         })
     }
 }

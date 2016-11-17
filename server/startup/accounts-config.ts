@@ -1,20 +1,23 @@
 import { Accounts } from 'meteor/accounts-base';
 
 Accounts.onCreateUser(function(options, user) {
-   // Use provided profile in options, or create an empty object
-   //user.profile = options.profile || {};
-   
-   // Assigns first and last names to the newly created user object
-   //user.profile.firstName = options.firstName;
-   //user.profile.lastName = options.lastName;
-   
    // Use provided userData in options, or create an empty object
+   // user profile
+   if (typeof options.profile !== "undefined") {
+       user.profile = options.profile || {};
+   }
    // patient profile
-   user.patient = options.patient || {};
+   if (typeof options.patient !== "undefined") {
+       user.patient = options.patient || {};
+   }
    // user status
-   user.status = options.status || {};
+   if (typeof options.status !== "undefined") {
+       user.status = options.status || {};
+   }
    // invites array
-   user.invites = options.invites || [];
+   if (typeof options.invites !== "undefined") {
+       user.invites = options.invites || [];
+   }
    // user type
    user.type = options.type || "standard";
 
