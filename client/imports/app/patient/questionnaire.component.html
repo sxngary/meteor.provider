@@ -1,19 +1,19 @@
 
-<div class="row" *ngIf="testds">
+<div class="row" *ngIf="questionnaireList">
     <div class="col s12">
         <div class="col s12 center">
             <h4>Questionnaire</h4>
         </div>
         <div class="col l8 m8 s8">
             <div class="input-field col s12">
-                <select class="browser-default">
+                <select class="browser-default" id="questionnaireList" [(ngModel)]="questionnaireSelected">
                     <option value="">Select Questionnaire</option>
-                    <option *ngFor="let user of testds" value="{{user._id}}">{{user.title}}</option>                    
+                    <option *ngFor="let items of questionnaireList" value="{{items._id}}">{{items.title}}</option>                    
                 </select>
             </div>
         </div>
         <div class="col l4 m4 s4">
-            <a href="" class="waves-effect waves-light btn">Send</a>
+            <a (click)="assignQuestionnaire();" class="waves-effect waves-light btn">Send</a>
         </div>
     </div>
     <div class="col s12"><hr></div>
@@ -29,29 +29,22 @@
                 </tr>
             </thead>
     
-            <tbody>
+            <tbody *ngFor="let items of assignQuestionnaires">
                 <tr>
-                  <td>Lifescore</td>
-                  <td>10/11/2016</td>
-                  <td>18/24</td>
-                  <td>Pass</td>
-                  <td>view</td>
-                </tr>
-                <tr>
-                  <td>Lifescore</td>
-                  <td>10/11/2016</td>
-                  <td>18/24</td>
-                  <td>Pass</td>
-                  <td>view</td>
-                </tr>
-                <tr>
-                  <td>Lifescore</td>
-                  <td>10/11/2016</td>
-                  <td>18/24</td>
-                  <td>Pass</td>
-                  <td>view</td>
+                  <td>{{items.questionnaire.title}}</td>
+                  <td>{{items.assignDate | date}}</td>
+                  <td>-</td>
+                  <td>{{items.action}}</td>
+                  <td>{{items.status}}</td>
                 </tr>
             </tbody>
+            <tbody *ngIf="!assignQuestionnaires || !assignQuestionnaires.length">
+                <tr>
+                  <td>No record found.</td>
+                </tr>
+            </tbody>
+            
+            
         </table>
     </div>
     <div class="row">

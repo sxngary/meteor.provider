@@ -1,9 +1,13 @@
 import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {Observable, Subscription, Subject} from "rxjs";
-import {MeteorObservable} from "meteor-rxjs";
+import { Observable } from "rxjs/Observable";
+import { MeteorObservable } from "meteor-rxjs";
 import { InjectUser } from "angular2-meteor-accounts-ui";
+import { showAlert } from "../shared/show-alert";
+import { Subscription } from 'rxjs/Subscription';
 import template from './agreements.component.html';
+import {PatientAgreements} from "../../../../both/collections/agreements.collection";
+
 
 @Component({
   selector: 'patient-agreement',
@@ -12,7 +16,11 @@ import template from './agreements.component.html';
 })
 @InjectUser("user")
 export class PatientAgreementComponent implements OnInit {
-  patientSub: Observable<any[]>;  
+  agreementSelected: String;
+  agreement: any[];
+  patientAgree : any[];
+  agreementList: Observable<any[]>;
+  agreementSub: Subscription;
 
   constructor(
     private route: ActivatedRoute, 
@@ -20,33 +28,74 @@ export class PatientAgreementComponent implements OnInit {
   ) {}
 
     ngOnInit() {
-        this.patientSub = Observable.create(observer => {
-            Meteor.call("findAllQuestionnaires", (err, res)=> {
+        this.agreementList = Observable.create(observer => {
+            Meteor.call("findAllAgreements", (err, res)=> {
                 if (err) {                   
                     observer.error(err);
                 } else {
-                    // reset data
                     observer.next(res);
                     observer.complete();
                 }
             });
             return () => {              
-                console.log("patientSub unsubscribed")
+                console.log("agreementList unsubscribed")
             };
         });
-        this.getPatient();
+        this.getAgreement();
+        
+        this.route.params
+            .map(params => params['patientId'])
+            .subscribe(patientId => {
+                MeteorObservable.subscribe('patientAgreements',patientId).subscribe(() => {
+                    console.log("set patient-agreement list");
+                    this.patientAgree = PatientAgreements.find({patientId:patientId}).fetch();
+                });
+        });
+        
+        //this.patientAgree = PatientAgreements.find({}).zone();
     }
 
-  getPatient() {
-    this.patientSub.subscribe((patient) => {
-        this.ngZone.run(() => {
-            this.patient = patient;
+    getAgreement() {
+        this.agreementList.subscribe((res) => {
+            this.ngZone.run(() => {
+                this.agreement = res;
+            });
+        }, err =>{
+            console.error(err);
         });
-    }, err =>{
-        console.error(err);
-    });
-  }
+    }
+    
+    sendAgreement():void{
+        var agreementId = this.agreementSelected;
+        var providerId = Meteor.userId();
+        this.route.params
+        .map(params => params['patientId'])
+        .subscribe(patientId => {
+            let agreementTitle = jQuery("#agreementList option:selected").text();
+            let agreementData = {
+                providerId,
+                patientId,
+                agreement: {
+                    _id: agreementId,
+                    title: agreementTitle
+                },
+                assignDate : new Date(),
+                action : 'pending',
+                status : true
+            };
+            Meteor.call('sendAgreement',agreementData,(err,res)=>{
+                if(err){
+                    showAlert("Agreement not sent to patient.", "danger");
+                }
+                if (res) {
+                    showAlert("Agreement sent to patient.", "success");
+                }
+            });
+        });
+    }
 
-  
+    getAgreementName(agreementId) {
+        console.log("inside getAgreementName");
+    }
 
 }

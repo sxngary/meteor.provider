@@ -1,22 +1,19 @@
 
-<div class="row" *ngIf="patient">
+<div class="row" *ngIf="agreement">
     <div class="col s12">
         <div class="col s12 center">
             <h4>Opiate Agreements</h4>
         </div>
         <div class="col l8 m8 s8">
-            <!--<div class="col s12">{{patient.firstName}} {{patient.lastName}}</div>-->
             <div class="input-field col s12">
-                <select class="browser-default">
-                    <option value="">Select Agreements</option>
-                    <option value="1">Option 1</option>
-                    <option value="2">Option 2</option>
-                    <option value="3">Option 3</option>
+                <select class="browser-default" id="agreementList" [(ngModel)]="agreementSelected">
+                    <option selected>Select Agreements</option>
+                    <option *ngFor="let items of agreement" value="{{items._id}}">{{items.agreementName}}</option>
                 </select>
             </div>
         </div>
         <div class="col l4 m4 s4">
-            <a href="" class="waves-effect waves-light btn">Send</a>
+            <a (click)="sendAgreement();" class="waves-effect waves-light btn">Send</a>
         </div>
     </div>
     <hr>
@@ -28,33 +25,25 @@
                     <th data-field="name">Date</th>
                     <th data-field="price">Result</th>
                     <th data-field="price">Status</th>
-                    <th data-field="price">Details</th>
               </tr>
             </thead>
     
-            <tbody>
+            <tbody *ngFor="let items of patientAgree">
                 <tr>
-                  <td>Lifescore</td>
-                  <td>10/11/2016</td>
-                  <td>18/24</td>
-                  <td>Pass</td>
-                  <td>view</td>
-                </tr>
-                <tr>
-                  <td>Lifescore</td>
-                  <td>10/11/2016</td>
-                  <td>18/24</td>
-                  <td>Pass</td>
-                  <td>view</td>
-                </tr>
-                <tr>
-                  <td>Lifescore</td>
-                  <td>10/11/2016</td>
-                  <td>18/24</td>
-                  <td>Pass</td>
-                  <td>view</td>
+                  <!--<td [innerHtml]="getAgreementName(items.agreementId)"></td>-->
+                  <td>{{items.agreement.title}}</td>
+                  <td>{{items.assignDate | date}}</td>
+                  <td>{{items.action}}</td>
+                  <td>{{items.status}}</td>
                 </tr>
             </tbody>
+            <tbody *ngIf="!patientAgree || !patientAgree.length">
+                <tr>
+                  <td>No record found.</td>
+                </tr>
+            </tbody>
+            
+            
         </table>
     </div>
     <div class="row">

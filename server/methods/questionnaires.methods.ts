@@ -1,15 +1,23 @@
-import {Questionnaires} from "../../both/collections/questionnaires.collection";
+import {Questionnaires, PatientQuestionnaires } from "../../both/collections/questionnaires.collection";
 import {Questionnaire} from "../../both/models/questionnaire.model";
 import {Meteor} from "meteor/meteor";
 
 
 Meteor.methods({
     "findAllQuestionnaires": () => {
-        var quest = Questionnaires.collection.find().fetch();
-        console.log(quest,'questionnaire collection');
-        return Questionnaires.collection.find().fetch();
+        var questonnaire = Questionnaires.collection.find().fetch();
+        //console.log(questonnaire,'questionnaire collection');
+        if (questonnaire) {
+            return questonnaire;
+        }else{
+            return [];    
+        }
     },
-    //"patients.findOne": (patientId: String): Patient => {
-    //    return Patients.collection.findOne({_id: patientId});
-    //},
+    
+    "assignQuestionnaire": (data) => {
+        var result = PatientQuestionnaires.insert(data);
+        
+        return result;
+    },
+    
 });
