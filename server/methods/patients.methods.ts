@@ -92,10 +92,36 @@ Meteor.methods({
     "patients.find": (options: Options, searchString: String) => {
         let where = {"type": "patient", "status.isDeleted": false};
         if (typeof searchString === 'string' && searchString.length) {
-            where["patient.firstName"] = {
-                $regex: `.*${searchString}.*`,
-                $options : 'i'
-            };
+            where["$or"] = [
+                {
+                    "patient.firstName":
+                    {
+                    $regex: `.*${searchString}.*`,
+                    $options : 'i'
+                    }
+                },
+                {
+                    "patient.lastName":
+                    {
+                    $regex: `.*${searchString}.*`,
+                    $options : 'i'
+                    }
+                },
+                {
+                    "patient.company":
+                    {
+                    $regex: `.*${searchString}.*`,
+                    $options : 'i'
+                    }
+                },
+                {
+                    "patient.address":
+                    {
+                    $regex: `.*${searchString}.*`,
+                    $options : 'i'
+                    }
+                }
+            ]
         }
 
         _.extend(options, {

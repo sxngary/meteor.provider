@@ -29,19 +29,39 @@
     </section>
 </section>
 
-<pagination-controls class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
+<pagination-controls *ngIf="patientsSize>0" class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
+
+<!--<div class="cs-loader" style="display: none">
+  <div class="cs-loader-inner">
+    <label>	●</label>
+    <label>	●</label>
+    <label>	●</label>
+    <label>	●</label>
+    <label>	●</label>
+    <label>	●</label>
+  </div>
+</div>-->
+
+<div *ngIf="patients && patients.length==0">
+    No records found.
+</div>
+
+<div class="loading">
+    Loading...
+</div>
 
 <section class="col s12 wht-bg mar-tp5 mar-bt5 bt-shadow" 
 *ngFor="let user of patients" 
 [attr.data-patient-id]="user.patient._id"
-[ngClass]="{'red accent-1': user.status.isDeleted}">
+[ngClass]="{'red accent-1': user.status.isDeleted}"
+[hidden]="user.status.isDeleted">
     <section class="pateint-list">
         <section class="col s2 pateint-pic"> <img class="responsive-img" src="images/pic1.png" alt=""/> </section>
         <section class="col s6 mar-tp10">
             <h2 class="pateint-name"><a [routerLink]="['/patients/details', user.patient._id]">{{user.patient.firstName}} {{user.patient.lastName}}</a></h2>
             <ul class="pateint-deatil">
                 <li class="feamle-lt"><i><img src="images/feamle-ic.png" alt=""/></i> Female</li>
-                <li><i class="zmdi zmdi-walk"></i> {{user.patient.dob | date}}</li>
+                <li><i class="zmdi zmdi-walk"></i> {{user.patient.dob | age}}</li>
             </ul>
             <address class="col s12">
                 <i class="zmdi zmdi-pin"></i> {{user.patient.address}}
@@ -57,4 +77,4 @@
     </section>
 </section>
 
-<pagination-controls class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
+<pagination-controls *ngIf="patientsSize>0" class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
