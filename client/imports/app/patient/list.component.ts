@@ -13,7 +13,9 @@ interface Pagination {
   limit: number;
   skip: number;
 }
- 
+
+declare var jQuery:any;
+
 interface Options extends Pagination {
   [key: string]: any
 }
@@ -32,7 +34,7 @@ export class PatientListComponent extends MeteorComponent implements OnInit, OnD
     nameOrder: Subject<number> = new Subject<number>();
     optionsSub: Subscription;
     patientsSize: number = 0;
-    patientsSizeSub: Observable<number>;
+    //patientsSizeSub: Observable<number>;
     //autorunSub: Subscription;
     searchString: Subject<string> = new Subject<string>();
     user: Meteor.User;
@@ -56,13 +58,15 @@ export class PatientListComponent extends MeteorComponent implements OnInit, OnD
 
             this.paginationService.setCurrentPage(this.paginationService.defaultId, curPage as number);
 
-            if (this.patients) {
+            /*if (this.patients) {
                 this.patients = null;
-            }
+            }*/
 
             //console.log("options:", options);
+            jQuery(".loading").show();
             this.call("patients.find", options, searchString, (err, res) => {
                 //console.log("patients.find() done");
+                jQuery(".loading").hide();
                 if (err) {
                     //console.log("error while fetching patient list:", err);
                     showAlert("Error while fetching patient list.", "danger");

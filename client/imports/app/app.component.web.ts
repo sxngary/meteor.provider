@@ -3,6 +3,8 @@ import { Router } from '@angular/router'
 import template from './app.component.web.html';
 import {InjectUser} from "angular2-meteor-accounts-ui";
 
+declare var jQuery:any;
+
 @Component({
     selector: 'app',
     template
