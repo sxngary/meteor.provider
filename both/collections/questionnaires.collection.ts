@@ -1,7 +1,7 @@
 import { MongoObservable } from 'meteor-rxjs';
 import { Meteor } from 'meteor/meteor';
 
-import {Questionnaire} from "../models/questionnaire.model";
+import {Questionnaire, PatientQuestionnaires} from "../models/questionnaire.model";
 
 
 export const Questionnaires = new MongoObservable.Collection<Questionnaire>("questionnaires");

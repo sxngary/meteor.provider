@@ -46,13 +46,15 @@ export class PatientAgreementComponent implements OnInit {
         this.route.params
             .map(params => params['patientId'])
             .subscribe(patientId => {
-                MeteorObservable.subscribe('patientAgreements',patientId).subscribe(() => {
-                    console.log("set patient-agreement list");
+               this.agreementSub =  MeteorObservable.subscribe('patientAgreements',patientId).subscribe(() => {
+                    //console.log("set patient-agreement list");
                     this.patientAgree = PatientAgreements.find({patientId:patientId}).fetch();
                 });
         });
-        
-        //this.patientAgree = PatientAgreements.find({}).zone();
+    }
+    
+    ngOnDestroy() {
+        this.agreementSub.unsubscribe();
     }
 
     getAgreement() {

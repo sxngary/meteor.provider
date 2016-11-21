@@ -1,7 +1,7 @@
 import { MongoObservable } from 'meteor-rxjs';
 import { Meteor } from 'meteor/meteor';
 
-import {Agreement} from "../models/agreement.model";
+import {Agreement, PatientAgreements } from "../models/agreement.model";
 
 
 export const Agreements = new MongoObservable.Collection<Agreement>("agreements");
