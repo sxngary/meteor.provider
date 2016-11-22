@@ -1,71 +1,107 @@
+    <!--main container-->
+    <section *ngIf="patient">
+        <!--Patient Detail Page-->
+        <h2>Patient Details</h2>
+        <section class="col s12 pt-detail bt-shadow">
+            <section class="detail-pic-pateint col s3">
+                <img src="images/deatil-pateint.png" class="responsive-img" alt="">
+            </section>
+            <section class="col s9 content-ptdetail ">
+                <h2>{{patient.firstName}} {{patient.lastName}}</h2>
+                <ul>
+                    <li><i class="zmdi zmdi-link"></i><a href="javascript:void(0);">{{patient.email}}</a></li>
+                    <li class="robotofont"><i class="zmdi zmdi-phone"></i>{{patient.phoneNum}}</li>
+                </ul>
+                <a class="btn-floating  waves-effect waves-light blue detailedit" [routerLink]="['/patients/edit', patient._id]"><i class="material-icons">mode_edit</i></a>
+            </section>
 
-<div class="row" *ngIf="patient">
-    <div class="col s12">
-        <div class="row" >
-            <div class="col s12 center">
-                <h4>Patient Details</h4>
-            </div>
-            <section class="col s2 pateint-pic"> <img class="responsive-img" src="images/pic1.png" alt=""/> </section>
-            <div class="col s8">
-                <div class="col s12">{{patient.firstName}} {{patient.lastName}}</div>
-                <div class="col s12">{{patient.email}} </div>
-                <div class="col s12">{{patient.phoneNum}} </div>
-            </div>
-            <div class="col s2">
-                <a [routerLink]="['/patients/edit', patient._id]" class="waves-effect waves-light btn">Edit Patient</a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col l6 m6 s12 ">
-                <strong> Personal Id : </strong> {{patient.personalId}}
-            </div>
-            <div class="col l6 m6 s12">
-                <strong> Group Id :</strong> {{patient.groupId}}
-            </div>
-            <div class="col l6 m6 s12">
-                <strong> Company : </strong> {{patient.company}}
-            </div>
-            <div class="col l6 m6 s12">
-                <strong> Address : </strong> {{patient.address}}
-            </div>
-            <div class="col l6 m6 s12">
-                <strong>Insurer : </strong> {{patient.insurer}}
-            </div>
-            <div class="col l6 m6 s12">
-                <strong> Guarantor : </strong> {{patient.guarantor}}
-            </div>
-        </div>
-    </div>
-    <hr>
-    <div class="col s12">
-        <div class="col l6 m6 s12">
-            <a href="">Request for lab order</a>
-            <hr>
-        </div>
-        <div class="col l6 m6 s12">
-            <a href="">Lab test results</a>
-            <hr>
-        </div>
-        <div class="col l6 m6 s12">
-            <a [routerLink]="['/patients/agreements', patient._id]">Send opiate agreements</a>
-            <hr>
-        </div>
-        <div class="col l6 m6 s12">
-            <a [routerLink]="['/patients/questionnaire', patient._id]">Assign survey</a>
-            <hr>
-        </div>
-        <div class="col l6 m6 s12">
-            <a href="">Assign knowledge base</a>
-            <hr>
-        </div>
-        <div class="col l6 m6 s12">
-            <a href="">Set pharmacy</a>
-            <hr>
-        </div>
-    </div>
-    <div class="row">
-        <div [hidden]="user">
-            Please login in order to update patient.
-        </div>
-    </div>
-</div>
+            <section class="patient-gendetail col s12">
+                <!--patient general detail-->
+                <ul>
+                    <li>
+                        <label>D.O.B</label>
+                        <span>{{patient.dob | date}}</span>
+                    </li>
+                    <li>
+                        <label>Gender</label>
+                        <span>{{patient.gender}}</span>
+                    </li>
+                    <li>
+                        <label>Weight</label>
+                        <span class="robotofont">65 Kg</span>
+                    </li>
+
+                    <li>
+                        <label>Address</label>
+                        <span class="robotofont">{{patient.address}}</span>
+                    </li>
+                    <li>
+                        <label>State</label>
+                        <span>Menchester</span>
+                    </li>
+                    <li>
+                        <label>Zip</label>
+                        <span class="robotofont">540021</span>
+                    </li>
+                </ul>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+                    standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled
+                    it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic
+                    typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
+                    sheets containing Lorem Ipsum passages.</p>
+            </section>
+            <section class="request-btn">
+                <!--request button-->
+                <section class="col s4">
+                    <li>
+                        <a href="javascript:void(0);">
+                            <span>Request for Lab order</span>
+                            <i class="zmdi zmdi-chevron-right"></i>
+                        </a>
+                    </li>
+                </section>
+                <section class="col s4">
+                    <li>
+                        <a [routerLink]="['/patients/agreements', patient._id]">
+                            <span>Send Opiate Agreement</span>
+                            <i class="zmdi zmdi-chevron-right"></i>
+                        </a>
+                    </li>
+                </section>
+                <section class="col s4">
+                    <li>
+                        <a href="javascript:void(0);">
+                            <span>Lab Test Results</span>
+                            <i class="zmdi zmdi-chevron-right"></i>
+                        </a>
+                    </li>
+                </section>
+                <section class="col s4">
+                    <li>
+                        <a [routerLink]="['/patients/questionnaire', patient._id]">
+                            <span>Assign Assessment</span>
+                            <i class="zmdi zmdi-chevron-right"></i>
+                        </a>
+                    </li>
+                </section>
+                <section class="col s4">
+                    <li>
+                        <a href="javascript:void(0);">
+                            <span>Send a Message</span>
+                            <i class="zmdi zmdi-chevron-right"></i>
+                        </a>
+                    </li>
+                </section>
+                <section class="col s4">
+                    <li>
+                        <a href="javascript:void(0);">
+                            <span>Assign Knowledge Base</span>
+                            <i class="zmdi zmdi-chevron-right"></i>
+                        </a>
+                    </li>
+                </section>
+            </section>
+        </section>
+        <!--request button-->
+
+    </section>
