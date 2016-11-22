@@ -6,6 +6,7 @@ import {MeteorObservable} from "meteor-rxjs";
 import {InjectUser} from "angular2-meteor-accounts-ui";
 import {MeteorComponent} from 'angular2-meteor';
 import { Patient } from "../../../../both/models/csv.model";
+import { ChangeDetectorRef } from "@angular/core";
 import {showAlert} from "../shared/show-alert";
 
 import template from "./list.component.html";
@@ -40,7 +41,7 @@ export class PatientListComponent extends MeteorComponent implements OnInit, OnD
     searchString: Subject<string> = new Subject<string>();
     user: Meteor.User;
 
-    constructor(private paginationService: PaginationService, private ngZone: NgZone) {
+    constructor(private paginationService: PaginationService, private ngZone: NgZone, private changeDetectorRef: ChangeDetectorRef) {
         super();
     }
 
@@ -133,7 +134,11 @@ export class PatientListComponent extends MeteorComponent implements OnInit, OnD
                 showAlert("Error calling patient.remove", "danger");
                 return;
             }
+            //set patient isDeleted to true to remove from list
             patient.status.isDeleted = true;
+            //angular2 waits for dom event to detect changes automatically
+            //so trigger change detection manually to update dom
+            this.changeDetectorRef.detectChanges();
             showAlert("Patient has been removed.", "success");
         })
     }
