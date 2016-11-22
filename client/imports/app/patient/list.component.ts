@@ -5,6 +5,7 @@ import {PaginationService} from "ng2-pagination";
 import {MeteorObservable} from "meteor-rxjs";
 import {InjectUser} from "angular2-meteor-accounts-ui";
 import {MeteorComponent} from 'angular2-meteor';
+import { Patient } from "../../../../both/models/csv.model";
 import {showAlert} from "../shared/show-alert";
 
 import template from "./list.component.html";
@@ -28,7 +29,7 @@ interface Options extends Pagination {
 export class PatientListComponent extends MeteorComponent implements OnInit, OnDestroy {
 
     patientsSub: Observable<any[]>;
-    patients: any[];
+    patients: Patient[];
     pageSize: Subject<number> = new Subject<number>();
     curPage: Subject<number> = new Subject<number>();
     nameOrder: Subject<number> = new Subject<number>();
@@ -53,7 +54,7 @@ export class PatientListComponent extends MeteorComponent implements OnInit, OnD
             const options: Options = {
                 limit: pageSize as number,
                 skip: ((curPage as number) - 1) * (pageSize as number),
-                sort: { "patient.firstName": nameOrder as number }
+                sort: { "firstName": nameOrder as number }
             };
 
             this.paginationService.setCurrentPage(this.paginationService.defaultId, curPage as number);
@@ -110,8 +111,8 @@ export class PatientListComponent extends MeteorComponent implements OnInit, OnD
         this.nameOrder.next(parseInt(nameOrder));
     }
 
-    sendInvite(user: any) {
-        Meteor.call("patient.sendInvite", user._id, (err, res) => {
+    sendInvite(patient: Patient) {
+        Meteor.call("patient.sendInvite", patient._id, (err, res) => {
             if (err) {
                 //console.log("error calling patient.sendInvite");
                 showAlert("Error calling patient.sendInvite", "danger");
@@ -121,14 +122,14 @@ export class PatientListComponent extends MeteorComponent implements OnInit, OnD
         })
     }
 
-    deletePatient(user: any) {
-        Meteor.call("patient.remove", user.patient._id, (err, res) => {
+    deletePatient(patient: Patient) {
+        Meteor.call("patient.remove", patient._id, (err, res) => {
             if (err) {
                 //console.log("error calling patient.remove");
                 showAlert("Error calling patient.remove", "danger");
                 return;
             }
-            user.status.isDeleted = true;            
+            patient.status.isDeleted = true;            
             showAlert("Patient has been removed.", "info");
         })
     }

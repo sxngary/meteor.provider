@@ -12,13 +12,41 @@ interface Options {
 
 Meteor.methods({
     "patients.insert": (data) => {
+        // apply validations
+        check(data.firstName, String);
+        if (! isValidName(data.firstName)) {
+            throw new Meteor.Error(`Invalid firstName ${data.email}`);
+        }
+        check(data.lastName, String);
+        if (! isValidName(data.firstName)) {
+            throw new Meteor.Error(`Invalid lastName ${data.lastName}`);
+        }
+        check(data.email, String);
+        if (! isValidEmail(data.email) ) {
+            throw new Meteor.Error(`Invalid email ${data.email}`);
+        }
+        check(data.dob, Date);
+        check(data.address, String);
+        check(data.phoneNum, String);
+        if (! isValidPhone(data.phoneNum)) {
+            throw new Meteor.Error(`Invalid phoneNum ${data.phoneNum}`);
+        }
+        check(data.groupId, Number);
+        check(data.personalId, Number);
+        check(data.company, String);
+        check(data.insurer, String);
+        check(data.guarantor, String);
+
         // insert patient
+        data.status = {
+            isDeleted: false
+        };
         let patientId = Patients.collection.insert(data);
         //console.log("patientId:", patientId);
 
         // insert user
-        data._id = patientId;
-        Meteor.call("patients.insertUser", data);
+        /*data._id = patientId;
+        Meteor.call("patients.insertUser", data);*/
         return;
     },
     "patients.insertUser": (patientId: any) => {
@@ -39,30 +67,7 @@ Meteor.methods({
 
         // apply validations
         check(patient.csvId, String);
-        check(patient.firstName, String);
-        if (! isValidName(patient.firstName)) {
-            throw new Meteor.Error(`Invalid firstName ${patient.email}`);
-        }
-        check(patient.lastName, String);
-        if (! isValidName(patient.firstName)) {
-            throw new Meteor.Error(`Invalid lastName ${patient.lastName}`);
-        }
-        check(patient.email, String);
-        if (! isValidEmail(patient.email) ) {
-            throw new Meteor.Error(`Invalid email ${patient.email}`);
-        }
-        check(patient.dob, Date);
-        check(patient.address, String);
-        check(patient.phoneNum, String);
-        if (! isValidPhone(patient.phoneNum)) {
-            throw new Meteor.Error(`Invalid phoneNum ${patient.phoneNum}`);
-        }
-        check(patient.groupId, Number);
-        check(patient.personalId, Number);
-        check(patient.company, String);
-        check(patient.insurer, String);
-        check(patient.guarantor, String);
-
+        
         // prepare user-data before insertion
         let userData:any = {};
         userData.type = "patient";
@@ -90,32 +95,35 @@ Meteor.methods({
         }
     },
     "patients.find": (options: Options, searchString: String) => {
-        let where = {"type": "patient", "status.isDeleted": false};
+        let where = {
+            $or: [{"status.isDeleted": false}, {"status.isDeleted": {$exists: false} }],
+        };
         if (typeof searchString === 'string' && searchString.length) {
+            // allow search on firstName, lastName, company name, address fields
             where["$or"] = [
                 {
-                    "patient.firstName":
+                    "firstName":
                     {
                     $regex: `.*${searchString}.*`,
                     $options : 'i'
                     }
                 },
                 {
-                    "patient.lastName":
+                    "lastName":
                     {
                     $regex: `.*${searchString}.*`,
                     $options : 'i'
                     }
                 },
                 {
-                    "patient.company":
+                    "company":
                     {
                     $regex: `.*${searchString}.*`,
                     $options : 'i'
                     }
                 },
                 {
-                    "patient.address":
+                    "address":
                     {
                     $regex: `.*${searchString}.*`,
                     $options : 'i'
@@ -124,13 +132,15 @@ Meteor.methods({
             ]
         }
 
+        // restrict db fields to return
         _.extend(options, {
-            fields: {"emails.address": 1, "patient": 1, "createdAt": 1, "status": 1}
+            //fields: {"emails.address": 1, "patient": 1, "createdAt": 1, "status": 1}
         });
 
         //console.log("where:", where);
         //console.log("options:", options);
-        let cursor = Meteor.users.find(where, options);
+        // execute find query
+        let cursor = Patients.collection.find(where, options);
         return {count: cursor.count(), data: cursor.fetch()};
     },
     "patients.findOne": (patientId: String): Patient => {

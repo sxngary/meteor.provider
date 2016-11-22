@@ -20,6 +20,7 @@ export interface Patient extends CollectionObject {
     lastName: string;
     dob: Date;
     email: string;
+    gender: string;
     address: string;
     phoneNum: number;
     groupId: number;
