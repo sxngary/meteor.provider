@@ -29,7 +29,7 @@
                 </tr>
             </thead>
     
-            <tbody *ngFor="let items of assignQuestionnaires">
+            <tbody *ngFor="let items of assignQuestionnaires | async">
                 <tr>
                   <td>{{items.questionnaire.title}}</td>
                   <td>{{items.assignDate | date}}</td>
@@ -38,7 +38,7 @@
                   <td>-</td>
                 </tr>
             </tbody>
-            <tbody *ngIf="!assignQuestionnaires || !assignQuestionnaires.length">
+            <tbody *ngIf="!assignQuestionnaires.source._data.length">
                 <tr>
                   <td>No record found.</td>
                 </tr>

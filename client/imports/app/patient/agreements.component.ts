@@ -18,7 +18,7 @@ import {PatientAgreements} from "../../../../both/collections/agreements.collect
 export class PatientAgreementComponent implements OnInit {
   agreementSelected: String;
   agreement: any[];
-  patientAgree : any[];
+  patientAgree : Observable<any[]>;
   agreementList: Observable<any[]>;
   agreementSub: Subscription;
 
@@ -48,7 +48,7 @@ export class PatientAgreementComponent implements OnInit {
             .subscribe(patientId => {
                this.agreementSub =  MeteorObservable.subscribe('patientAgreements',patientId).subscribe(() => {
                     //console.log("set patient-agreement list");
-                    this.patientAgree = PatientAgreements.find({patientId:patientId}).fetch();
+                    this.patientAgree = PatientAgreements.find({patientId:patientId}).zone();
                 });
         });
     }
