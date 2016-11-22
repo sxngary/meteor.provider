@@ -39,7 +39,7 @@
                   <td>-</td>
                 </tr>
             </tbody>
-            <tbody *ngIf="!patientAgree.source._data.length">
+            <tbody *ngIf="!patientAgree || !patientAgree.source._data.length">
                 <tr>
                   <td>No record found.</td>
                 </tr>
