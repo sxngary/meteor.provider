@@ -1,34 +1,32 @@
 import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {Observable, Subscription, Subject} from "rxjs";
-import {MeteorObservable} from "meteor-rxjs";
+import { Observable, Subscription, Subject } from "rxjs";
+import { MeteorObservable } from "meteor-rxjs";
 import { InjectUser } from "angular2-meteor-accounts-ui";
 import { showAlert } from "../shared/show-alert";
 import { PatientQuestionnaires } from '../../../../both/collections/questionnaires.collection';
 import template from './questionnaire.component.html';
 
 @Component({
-  selector: 'patient-questionnaire',
-  template,
-  styles: [ ]
+    selector: 'patient-questionnaire',
+    template,
+    styles: []
 })
 @InjectUser("user")
 export class PatientQuestionnaireComponent implements OnInit {
-    questionnaireSub: Observable<any[]>; 
+    questionnaireSub: Observable<any[]>;
     questionnaireList: any[];
     questionnaireSelected: String;
-    assignQuestionnaires : any[];
-  
-    
-    
+    assignQuestionnaires: Observable<any[]>;
+
     constructor(
-                 private route: ActivatedRoute,
-                private ngZone: NgZone) {}
-  
+        private route: ActivatedRoute,
+        private ngZone: NgZone) { }
+
     ngOnInit() {
         this.questionnaireSub = Observable.create(observer => {
-            Meteor.call("findAllQuestionnaires", (err, res)=> {
-                if (err) {                   
+            Meteor.call("findAllQuestionnaires", (err, res) => {
+                if (err) {
                     observer.error(err);
                 } else {
                     // reset data
@@ -39,15 +37,15 @@ export class PatientQuestionnaireComponent implements OnInit {
             });
         });
         this.getQuestionnaire();
-        
+
         this.route.params
             .map(params => params['patientId'])
             .subscribe(patientId => {
-                MeteorObservable.subscribe('patientQuestionnaires',patientId).subscribe(() => {
+                MeteorObservable.subscribe('patientQuestionnaires', patientId).subscribe(() => {
                     console.log("set patient-agreement list");
-                    this.assignQuestionnaires = PatientQuestionnaires.find({patientId:patientId}).fetch();
+                    this.assignQuestionnaires = PatientQuestionnaires.find({ patientId: patientId }).zone();
                 });
-        });
+            });
     }
 
     getQuestionnaire() {
@@ -55,45 +53,45 @@ export class PatientQuestionnaireComponent implements OnInit {
             this.ngZone.run(() => {
                 this.questionnaireList = res;
             });
-        }, err =>{
+        }, err => {
             console.error(err);
         });
     }
-    
-    
-    assignQuestionnaire():void{
+
+
+    assignQuestionnaire(): void {
         var questionnaireId = this.questionnaireSelected;
         var providerId = Meteor.userId();
         this.route.params
-        .map(params => params['patientId'])
-        .subscribe(patientId => {
-            //console.log(agreementId,'abc',providerId,'patientid:',patientId);
-            
-            let questionnaireTitle = jQuery("#questionnaireList option:selected").text();
-            console.log(questionnaireTitle,'questionnaireTitle');
-            let questionnaireData = {
-                providerId,
-                patientId,
-                questionnaire: {
-                    _id: questionnaireId,
-                    title: questionnaireTitle
-                },
-                assignDate : new Date(),
-                action : 'pending',
-                status : true
-            };
-            console.log(questionnaireData,'data');
-            Meteor.call('assignQuestionnaire',questionnaireData,(err,res)=>{
-                if(err){
-                    showAlert("Agreement not sent to patient.", "danger");
-                }
-                if (res) {
-                    showAlert("Agreement sent to patient.", "success");
-                }
+            .map(params => params['patientId'])
+            .subscribe(patientId => {
+                //console.log(agreementId,'abc',providerId,'patientid:',patientId);
+
+                let questionnaireTitle = jQuery("#questionnaireList option:selected").text();
+                console.log(questionnaireTitle, 'questionnaireTitle');
+                let questionnaireData = {
+                    providerId,
+                    patientId,
+                    questionnaire: {
+                        _id: questionnaireId,
+                        title: questionnaireTitle
+                    },
+                    assignDate: new Date(),
+                    action: 'pending',
+                    status: true
+                };
+                console.log(questionnaireData, 'data');
+                Meteor.call('assignQuestionnaire', questionnaireData, (err, res) => {
+                    if (err) {
+                        showAlert("Agreement not sent to patient.", "danger");
+                    }
+                    if (res) {
+                        showAlert("Agreement sent to patient.", "success");
+                    }
+                });
             });
-        });
     }
 
-  
+
 
 }

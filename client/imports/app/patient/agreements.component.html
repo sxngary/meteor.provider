@@ -29,7 +29,7 @@
               </tr>
             </thead>
     
-            <tbody *ngFor="let items of patientAgree">
+            <tbody *ngFor="let items of patientAgree | async">
                 <tr>
                   <!--<td [innerHtml]="getAgreementName(items.agreementId)"></td>-->
                   <td>{{items.agreement.title}}</td>
@@ -39,13 +39,11 @@
                   <td>-</td>
                 </tr>
             </tbody>
-            <tbody *ngIf="!patientAgree || !patientAgree.length">
+            <tbody *ngIf="!patientAgree.source._data.length">
                 <tr>
                   <td>No record found.</td>
                 </tr>
             </tbody>
-            
-            
         </table>
     </div>
     <div class="row">
