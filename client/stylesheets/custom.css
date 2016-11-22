@@ -1,0 +1,6 @@
+.input-field p.error {
+    margin-top: -15px;
+    padding-bottom: 10px;
+    font-size: 0.9em;
+    color: #F44336;
+}

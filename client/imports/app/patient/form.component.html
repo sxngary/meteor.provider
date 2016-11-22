@@ -5,53 +5,62 @@
     <section class="col s12 pt-detail bt-shadow">
         <form class="col s12" [hidden]="!user" [formGroup]="patientForm" (ngSubmit)="updatePatient();">
             <div class="input-field col s12">
-            <input formControlName="firstName" id="firstName" [ngClass]="{'invalid':!patientForm.controls['firstName'].valid}" />
+            <input formControlName="firstName" id="firstName" [ngClass]="{'invalid':patientForm.controls['firstName'].touched && !patientForm.controls['firstName'].valid}" />
             <label for="firstName" class="active">First Name</label>
+            <p class="error" [hidden]="!(patientForm.controls['firstName'].touched && !patientForm.controls['firstName'].valid)">Please type correct value.</p>
             </div>
 
             <div class="input-field col s12">
-            <input formControlName="lastName" id="lastName" [ngClass]="{'invalid':!patientForm.controls['lastName'].valid}" />
+            <input formControlName="lastName" id="lastName" [ngClass]="{'invalid':patientForm.controls['lastName'].touched && !patientForm.controls['lastName'].valid}" />
             <label for="lastName" class="active">Last Name</label>
+            <p class="error" [hidden]="!(patientForm.controls['lastName'].touched && !patientForm.controls['lastName'].valid)">Please type correct value.</p>
             </div>
 
             <div class="input-field col s12">
-            <input formControlName="gender" id="gender" [ngClass]="{'invalid':!patientForm.controls['gender'].valid}" />
+            <input formControlName="gender" id="gender" [ngClass]="{'invalid':patientForm.controls['gender'].touched && !patientForm.controls['gender'].valid}" />
             <label for="gender" class="active">Gender</label>
+            <p class="error" [hidden]="!(patientForm.controls['gender'].touched && !patientForm.controls['gender'].valid)">Please type correct value.</p>
             </div>
 
             <div class="input-field col s12">
-            <textarea formControlName="bio" id="bio" [ngClass]="{'invalid':!patientForm.controls['bio'].valid}" class="materialize-textarea"></textarea>
-            <label for="bio" class="active">Bio</label>
+            <textarea formControlName="bio" id="bio" placeholder="Please write you own bio." [ngClass]="{'invalid':patientForm.controls['bio'].touched && !patientForm.controls['bio'].valid}" class="materialize-textarea"></textarea>
+            <p class="error" [hidden]="!(patientForm.controls['bio'].touched && !patientForm.controls['bio'].valid)">Please type correct value.</p>
             </div>
 
             <div class="input-field col s12">
-            <input formControlName="address" id="address" [ngClass]="{'invalid':!patientForm.controls['address'].valid}" />
+            <input formControlName="address" id="address" [ngClass]="{'invalid':patientForm.controls['address'].touched && !patientForm.controls['address'].valid}" />
             <label for="address" class="active">Street Address</label>
+            <p class="error" [hidden]="!(patientForm.controls['address'].touched && !patientForm.controls['address'].valid)">Please type correct value.</p>
             </div>
 
             <div class="input-field col s12">
-            <input formControlName="city" id="city" [ngClass]="{'invalid':!patientForm.controls['city'].valid}" />
+            <input formControlName="city" id="city" [ngClass]="{'invalid':patientForm.controls['city'].touched && !patientForm.controls['city'].valid}" />
             <label for="city" class="active">City</label>
+            <p class="error" [hidden]="!(patientForm.controls['city'].touched && !patientForm.controls['city'].valid)">Please type correct value.</p>
             </div>
 
             <div class="input-field col s12">
-            <input formControlName="state" id="state" [ngClass]="{'invalid':!patientForm.controls['state'].valid}" />
+            <input formControlName="state" id="state" [ngClass]="{'invalid':patientForm.controls['state'].touched && !patientForm.controls['state'].valid}" />
             <label for="state" class="active">State</label>
+            <p class="error" [hidden]="!(patientForm.controls['state'].touched && !patientForm.controls['state'].valid)">Please type correct value.</p>
             </div>
 
             <div class="input-field col s12">
-            <input formControlName="zip" id="zip" [ngClass]="{'invalid':!patientForm.controls['zip'].valid}" />
+            <input formControlName="zip" id="zip" [ngClass]="{'invalid':patientForm.controls['zip'].touched && !patientForm.controls['zip'].valid}" />
             <label for="zip" class="active">Zip</label>
+            <p class="error" [hidden]="!(patientForm.controls['zip'].touched && !patientForm.controls['zip'].valid)">Please type correct value.</p>
             </div>
 
             <div class="input-field col s12">
-            <input formControlName="company" id="company" [ngClass]="{'invalid':!patientForm.controls['company'].valid}" />
+            <input formControlName="company" id="company" [ngClass]="{'invalid':patientForm.controls['company'].touched && !patientForm.controls['company'].valid}" />
             <label for="company" class="active">Company</label>
+            <p class="error" [hidden]="!(patientForm.controls['company'].touched && !patientForm.controls['company'].valid)">Please type correct value.</p>
             </div>
 
             <div class="input-field col s12">
-            <input formControlName="phoneNum" id="phoneNum" [ngClass]="{'invalid':!patientForm.controls['phoneNum'].valid}" />
+            <input formControlName="phoneNum" id="phoneNum" [ngClass]="{'invalid':patientForm.controls['phoneNum'].touched && !patientForm.controls['phoneNum'].valid}" />
             <label for="phoneNum" class="active">Phone Num</label>
+            <p class="error" [hidden]="!(patientForm.controls['phoneNum'].touched && !patientForm.controls['phoneNum'].valid)">Please type correct value.</p>
             </div>
 
             <div class="row">
@@ -59,13 +68,8 @@
                 <button class="btn waves-effect waves-light" type="submit" name="action" [disabled]="!patientForm.valid">Update
                     <i class="material-icons right">send</i>
                 </button>
-                <span *ngIf="updating">&nbsp;Updating...</span>
-                <span *ngIf="updated">&nbsp;Updated</span>
                 </div>
             </div>
         </form>
-        <div [hidden]="user">
-            Please login in order to update patient.
-        </div>
     </section>
 </div>

@@ -123,14 +123,18 @@ export class PatientListComponent extends MeteorComponent implements OnInit, OnD
     }
 
     deletePatient(patient: Patient) {
+        if (! confirm("Are you sure to delete this record?")) {
+            return false;
+        }
+
         Meteor.call("patient.remove", patient._id, (err, res) => {
             if (err) {
                 //console.log("error calling patient.remove");
                 showAlert("Error calling patient.remove", "danger");
                 return;
             }
-            patient.status.isDeleted = true;            
-            showAlert("Patient has been removed.", "info");
+            patient.status.isDeleted = true;
+            showAlert("Patient has been removed.", "success");
         })
     }
 
