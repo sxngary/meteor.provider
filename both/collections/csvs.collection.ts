@@ -14,7 +14,7 @@ function loggedIn(userId) {
 export const CsvsStore = new UploadFS.store.Local({
   collection: Csvs.collection,
   name: 'csvs',
-  path: '/home/rahulsethi/rahul/html/nodejs/rpm/RegPharma-ProviderApp/uploads/csvs',
+  path: process.env.PWD + '/uploads/csvs',
   filter: new UploadFS.Filter({
     contentTypes: ['text/csv'],
     extensions: ['csv']
