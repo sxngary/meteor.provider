@@ -47,11 +47,16 @@ export class PatientFormComponent extends MeteorComponent implements OnInit {
             }
             this.patient = patient;
             this.patientForm = this.formBuilder.group({
-            firstName: [patient.firstName, Validators.required],
-            lastName: [patient.lastName, Validators.required],
-            address: [patient.address, Validators.required],
-            company: [patient.company, Validators.required],
-            phoneNum: [patient.phoneNum, Validators.required]
+            firstName: [patient.firstName, Validators.compose([Validators.required, Validators.pattern("[a-zA-Z ]{2,30}")]) ],
+            lastName: [patient.lastName, Validators.compose([Validators.required, Validators.pattern("[a-zA-Z ]{2,30}")]) ],
+            address: [patient.address, Validators.compose([Validators.maxLength(40), Validators.required]) ],
+            city: [patient.city, Validators.compose([Validators.maxLength(20), Validators.required]) ],
+            state: [patient.state, Validators.compose([Validators.maxLength(20), Validators.required]) ],
+            zip: [patient.zip, Validators.compose([Validators.maxLength(5), Validators.required]) ],
+            bio: [patient.bio, Validators.compose([Validators.maxLength(100), Validators.required]) ],
+            gender: [patient.gender, Validators.compose([Validators.maxLength(6), Validators.required]) ],
+            company: [patient.company, Validators.compose([Validators.maxLength(20), Validators.required]) ],
+            phoneNum: [patient.phoneNum, Validators.compose([Validators.required, Validators.pattern("[\s()+-]*([0-9][\s()+-]*){6,20}")]) ]
             });
         });
 
@@ -77,6 +82,9 @@ export class PatientFormComponent extends MeteorComponent implements OnInit {
           //this.patientForm.reset();
       })
       
+    } else {
+      console.log("formbuilder:", this.formBuilder);
+      showAlert("Please type correct values.", "warning")
     }
   }
 
