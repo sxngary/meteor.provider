@@ -77,7 +77,7 @@ export class PatientQuestionnaireComponent implements OnInit {
                         title: questionnaireTitle
                     },
                     assignDate: new Date(),
-                    action: 'pending',
+                    action: 'Pending',
                     status: true
                 };
                 console.log(questionnaireData, 'data');

@@ -82,7 +82,7 @@ export class PatientAgreementComponent implements OnInit {
                     title: agreementTitle
                 },
                 assignDate : new Date(),
-                action : 'pending',
+                action : 'Pending',
                 status : true
             };
             Meteor.call('sendAgreement',agreementData,(err,res)=>{
