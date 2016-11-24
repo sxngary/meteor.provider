@@ -2,10 +2,10 @@
 <div class="row" *ngIf="questionnaireList">
     <div class="col s12">
         <div class="col s12 center">
-            <h4>Questionnaire</h4>
+            <h4>Questionnaires</h4>
         </div>
         <div class="col l8 m8 s8">
-            <div class="input-field col s12">
+            <div class="input-field col s12" style="margin-top:0;">
                 <select class="browser-default" id="questionnaireList" [(ngModel)]="questionnaireSelected">
                     <option value="">Select Questionnaire</option>
                     <option *ngFor="let items of questionnaireList" value="{{items._id}}">{{items.title}}</option>                    
@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="col l4 m4 s4">
-            <a (click)="assignQuestionnaire();" class="waves-effect waves-light btn">Send</a>
+            <a (click)="assignQuestionnaire();" class="waves-effect waves-light btn blue">Send</a>
         </div>
     </div>
     <div class="col s12"><hr></div>
@@ -40,7 +40,7 @@
             </tbody>
             <tbody *ngIf="!assignQuestionnaires || !assignQuestionnaires.source._data.length">
                 <tr>
-                  <td>No record found.</td>
+                  <td colspan="5">No records found.</td>
                 </tr>
             </tbody>
             

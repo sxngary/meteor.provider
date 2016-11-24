@@ -5,7 +5,7 @@
             <h4>Opiate Agreements</h4>
         </div>
         <div class="col l8 m8 s8">
-            <div class="input-field col s12">
+            <div class="input-field col s12" style="margin-top:0;">
                 <select class="browser-default" id="agreementList" [(ngModel)]="agreementSelected">
                     <option selected>Select Agreements</option>
                     <option *ngFor="let items of agreement" value="{{items._id}}">{{items.agreementName}}</option>
@@ -13,10 +13,10 @@
             </div>
         </div>
         <div class="col l4 m4 s4">
-            <a (click)="sendAgreement();" class="waves-effect waves-light btn">Send</a>
+            <a (click)="sendAgreement();" class="waves-effect waves-light btn blue">Send</a>
         </div>
     </div>
-    <hr>
+    <div class="col s12"><hr></div>
     <div class="col s10">
         <table class="bordered">
             <thead>
@@ -41,7 +41,7 @@
             </tbody>
             <tbody *ngIf="!patientAgree || !patientAgree.source._data.length">
                 <tr>
-                  <td>No record found.</td>
+                  <td colspan="5">No records found.</td>
                 </tr>
             </tbody>
         </table>
