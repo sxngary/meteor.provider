@@ -44,23 +44,39 @@
                         <span class="robotofont">{{patient.zip}}</span>
                     </li>
                 </ul>
-                <p *ngIf="!patient.bio">Please edit your profile to write your own biography.</p>
+                <p *ngIf="!patient.bio">Please edit profile to write your biography.</p>
                 <p *ngIf="patient.bio">{{patient.bio}}</p>
             </section>
             <section class="request-btn">
                 <!--request button-->
                 <section class="col s4">
                     <li>
-                        <a href="javascript:void(0);">
-                            <span>Request for Lab order</span>
+                        <a [routerLink]="['/patients/agreements', patient._id]">
+                            <span>Send Opiate Agreement</span>
                             <i class="zmdi zmdi-chevron-right"></i>
                         </a>
                     </li>
                 </section>
                 <section class="col s4">
                     <li>
-                        <a [routerLink]="['/patients/agreements', patient._id]">
-                            <span>Send Opiate Agreement</span>
+                        <a [routerLink]="['/patients/questionnaire', patient._id]">
+                            <span>Assign Questionnaire</span>
+                            <i class="zmdi zmdi-chevron-right"></i>
+                        </a>
+                    </li>
+                </section>
+                <section class="col s4">
+                    <li>
+                        <a href="javascript:void(0);">
+                            <span>Assign Knowledge Base</span>
+                            <i class="zmdi zmdi-chevron-right"></i>
+                        </a>
+                    </li>
+                </section>
+                <section class="col s4">
+                    <li>
+                        <a href="javascript:void(0);">
+                            <span>Request for Lab order</span>
                             <i class="zmdi zmdi-chevron-right"></i>
                         </a>
                     </li>
@@ -75,24 +91,8 @@
                 </section>
                 <section class="col s4">
                     <li>
-                        <a [routerLink]="['/patients/questionnaire', patient._id]">
-                            <span>Assign Assessment</span>
-                            <i class="zmdi zmdi-chevron-right"></i>
-                        </a>
-                    </li>
-                </section>
-                <section class="col s4">
-                    <li>
                         <a href="javascript:void(0);">
                             <span>Send a Message</span>
-                            <i class="zmdi zmdi-chevron-right"></i>
-                        </a>
-                    </li>
-                </section>
-                <section class="col s4">
-                    <li>
-                        <a href="javascript:void(0);">
-                            <span>Assign Knowledge Base</span>
                             <i class="zmdi zmdi-chevron-right"></i>
                         </a>
                     </li>

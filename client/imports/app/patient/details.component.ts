@@ -3,14 +3,17 @@ import { ActivatedRoute } from '@angular/router';
 import {Observable, Subscription, Subject} from "rxjs";
 import {MeteorObservable} from "meteor-rxjs";
 import { InjectUser } from "angular2-meteor-accounts-ui";
+import {MeteorComponent} from 'angular2-meteor';
+import { Patient } from "../../../../both/models/csv.model";
 import template from './details.component.html';
+import {showAlert} from "../shared/show-alert";
 
 @Component({
   selector: '',
   template
 })
 @InjectUser("user")
-export class PatientDetailsComponent implements OnInit {
+export class PatientDetailsComponent extends MeteorComponent implements OnInit {
   patientSub: Observable<any[]>;  
   patientId: string;
   patient: Patient;
@@ -19,7 +22,9 @@ export class PatientDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute, 
     private ngZone: NgZone
-  ) {}
+  ) {
+      super();
+  }
 
   ngOnInit() {
     this.paramsSub = this.route.params
@@ -28,33 +33,16 @@ export class PatientDetailsComponent implements OnInit {
             this.patientId = patientId;
             //console.log("patientId:", patientId);
     
-            this.patientSub = Observable.create(observer => {
-                Meteor.call("patients.findOne", patientId, (err, res)=> {
-                    if (err) {                   
-                        observer.error(err);
-                    } else {
-                        // reset data
-                        observer.next(res);
-                        observer.complete();
-                    }
-                });
-    
-                //return () => {              
-                //    console.log("patientSub unsubscribed")
-                //};
+            this.call("patients.findOne", patientId, (err, res)=> {
+                if (err) {
+                    //console.log("error while fetching patient data:", err);
+                    showAlert("Error while fetching patient data.", "danger");
+                    return;
+                }
+                this.patient = res;
             });
 
-        });   
-        this.getPatient();
+        });
   }
 
-  getPatient() {
-    this.patientSub.subscribe((patient) => {
-        this.ngZone.run(() => {
-            this.patient = patient;
-        });
-    }, err =>{
-        console.error(err);
-    });
-  }
 }

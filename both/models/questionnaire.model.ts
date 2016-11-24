@@ -9,7 +9,7 @@ export interface Questionnaire extends CollectionObject {
     questions : Object
 }
 
-export interface PatientQuestionnaires extends CollectionObject {
+export interface PatientQuestionnaire extends CollectionObject {
     //title : string,
     //strap : string,
     //summary : string,

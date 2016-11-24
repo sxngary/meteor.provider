@@ -95,7 +95,7 @@ Meteor.methods({
         }
     },
     "patients.find": (options: Options, searchString: String) => {
-        let where = {
+        let where:any = {
             $or: [{"status.isDeleted": false}, {"status.isDeleted": {$exists: false} }],
         };
         if (typeof searchString === 'string' && searchString.length) {

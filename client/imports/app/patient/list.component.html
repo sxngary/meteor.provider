@@ -20,7 +20,7 @@
 
 <section class="serach-bg">
     <section class="search col s10">
-        <input id="search" type="text" #searchtext class="col s12" placeholder="Search here..."/>
+        <input id="search" type="text" #searchtext class="col s12" placeholder="Search here..." (keyup.enter)="search(searchtext.value)" [(ngModel)]="searchString" />
         <label for="search" (click)="search(searchtext.value)"><i class="material-icons">search</i></label>
     </section>
     <section class="download-btn">

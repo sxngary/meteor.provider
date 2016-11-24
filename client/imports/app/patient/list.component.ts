@@ -1,12 +1,13 @@
 import { Meteor } from "meteor/meteor";
 import {Component, OnInit, OnDestroy, NgZone, AfterViewInit} from "@angular/core";
-import {Observable, Subscription, Subject} from "rxjs";
+import {Observable, Subscription, Subject, BehaviorSubject} from "rxjs";
 import {PaginationService} from "ng2-pagination";
 import {MeteorObservable} from "meteor-rxjs";
 import {InjectUser} from "angular2-meteor-accounts-ui";
 import {MeteorComponent} from 'angular2-meteor';
 import { Patient } from "../../../../both/models/csv.model";
 import { ChangeDetectorRef } from "@angular/core";
+import { LocalStorageService } from 'angular-2-local-storage';
 import {showAlert} from "../shared/show-alert";
 
 import template from "./list.component.html";
@@ -29,19 +30,21 @@ interface Options extends Pagination {
 
 export class PatientListComponent extends MeteorComponent implements OnInit, OnDestroy {
 
-    patientsSub: Observable<any[]>;
     patients: Patient[];
     pageSize: Subject<number> = new Subject<number>();
     curPage: Subject<number> = new Subject<number>();
     nameOrder: Subject<number> = new Subject<number>();
     optionsSub: Subscription;
     patientsSize: number = 0;
-    //patientsSizeSub: Observable<number>;
-    //autorunSub: Subscription;
-    searchString: Subject<string> = new Subject<string>();
+    searchSubject: Subject<string> = new Subject<string>();
+    searchString: string = "";
     user: Meteor.User;
 
-    constructor(private paginationService: PaginationService, private ngZone: NgZone, private changeDetectorRef: ChangeDetectorRef) {
+    constructor(private paginationService: PaginationService, 
+    private ngZone: NgZone, 
+    private changeDetectorRef: ChangeDetectorRef,
+    private localStorageService: LocalStorageService
+    ) {
         super();
     }
 
@@ -50,21 +53,25 @@ export class PatientListComponent extends MeteorComponent implements OnInit, OnD
             this.pageSize,
             this.curPage,
             this.nameOrder,
-            this.searchString
+            this.searchSubject
         ).subscribe(([pageSize, curPage, nameOrder, searchString]) => {
             const options: Options = {
                 limit: pageSize as number,
                 skip: ((curPage as number) - 1) * (pageSize as number),
                 sort: { "firstName": nameOrder as number }
             };
+            this.localStorageService.set("patients-list.options", {
+                pageSize: pageSize,
+                curPage: curPage,
+                nameOrder: nameOrder,
+                searchString: searchString
+            });
 
             this.paginationService.setCurrentPage(this.paginationService.defaultId, curPage as number);
 
-            /*if (this.patients) {
-                this.patients = null;
-            }*/
-
             //console.log("options:", options);
+            //console.log("searchString:", this.searchString);
+            this.searchString = searchString;
             jQuery(".loading").show();
             this.call("patients.find", options, searchString, (err, res) => {
                 //console.log("patients.find() done");
@@ -81,27 +88,55 @@ export class PatientListComponent extends MeteorComponent implements OnInit, OnD
 
         });
 
+        let options:any = this.localStorageService.get("patients-list.options");
+        //console.log("patient-list.options:", options);
+
+        if (!!options) {
+            if (! options.limit) {
+                options.limit = 10;
+            } else {
+                options.limit = Number(options.limit);
+            }
+
+            if (! options.curPage) {
+                options.curPage = 1;
+            } else {
+                options.curPage = Number(options.curPage);
+            }
+
+            if (! options.nameOrder) {
+                options.nameOrder = 1;
+            } else {
+                options.nameOrder = Number(options.nameOrder);
+            }
+
+            if (! options.searchString) {
+                options.searchString = '';
+            }
+        } else {
+            options = {
+                limit: 10,
+                curPage: 1,
+                nameOrder: 1,
+                searchString: '',
+            }
+        }
+
         this.paginationService.register({
         id: this.paginationService.defaultId,
         itemsPerPage: 10,
-        currentPage: 1,
+        currentPage: options.curPage,
         totalItems: this.patientsSize
         });
 
-        this.pageSize.next(10);
-        this.curPage.next(1);
-        this.nameOrder.next(1);
-        this.searchString.next('');
-        this.patientsSize = 0;
-
-        /*this.autorunSub = MeteorObservable.autorun().subscribe(() => {
-        //this.paginationService.setTotalItems(this.paginationService.defaultId, this.patientsSize);
-        });*/
-
+        this.pageSize.next(options.limit);
+        this.curPage.next(options.curPage);
+        this.nameOrder.next(options.nameOrder);
+        this.searchSubject.next(options.searchString);
     }
 
     search(value: string): void {
-        this.searchString.next(value);
+        this.searchSubject.next(value);
     }
 
     onPageChanged(page: number): void {
@@ -145,7 +180,6 @@ export class PatientListComponent extends MeteorComponent implements OnInit, OnD
 
     ngOnDestroy() {
         this.optionsSub.unsubscribe();
-        //this.autorunSub.unsubscribe();
     }
 
     ngAfterViewInit() {

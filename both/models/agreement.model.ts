@@ -10,7 +10,7 @@ export interface Agreement extends CollectionObject {
 }
 
 
-export interface PatientAgreements extends CollectionObject {
+export interface PatientAgreement extends CollectionObject {
     //title : string,
     //strap : string,
     //summary : string,
