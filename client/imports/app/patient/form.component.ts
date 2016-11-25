@@ -87,5 +87,9 @@ export class PatientFormComponent extends MeteorComponent implements OnInit {
       showAlert("Please type correct values.", "warning")
     }
   }
+  
+    cancelAction():void{
+        this.router.navigate( ['/patients/details/'+this.patientId] );
+    }
 
 }

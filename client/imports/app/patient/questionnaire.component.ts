@@ -42,7 +42,7 @@ export class PatientQuestionnaireComponent implements OnInit {
             .map(params => params['patientId'])
             .subscribe(patientId => {
                 MeteorObservable.subscribe('patientQuestionnaires', patientId).subscribe(() => {
-                    console.log("set patient-agreement list");
+                    //console.log("set patient-agreement list");
                     this.assignQuestionnaires = PatientQuestionnaires.find({ patientId: patientId }).zone();
                 });
             });
@@ -61,8 +61,9 @@ export class PatientQuestionnaireComponent implements OnInit {
 
     assignQuestionnaire(): void {
         var questionnaireId = this.questionnaireSelected;
-        var providerId = Meteor.userId();
-        this.route.params
+        if (questionnaireId) {
+            var providerId = Meteor.userId();
+            this.route.params
             .map(params => params['patientId'])
             .subscribe(patientId => {
                 //console.log(agreementId,'abc',providerId,'patientid:',patientId);
@@ -83,13 +84,17 @@ export class PatientQuestionnaireComponent implements OnInit {
                 console.log(questionnaireData, 'data');
                 Meteor.call('assignQuestionnaire', questionnaireData, (err, res) => {
                     if (err) {
-                        showAlert("Agreement not sent to patient.", "danger");
+                        showAlert("Questionnaire not assign to patient.", "danger");
                     }
                     if (res) {
-                        showAlert("Agreement sent to patient.", "success");
+                        showAlert("Questionnaire assign to patient.", "success");
                     }
                 });
             });
+        }else{
+            showAlert("Please select the questionnaire.", "danger");
+        }
+        
     }
 
 

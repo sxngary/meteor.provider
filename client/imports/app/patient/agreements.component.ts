@@ -37,9 +37,9 @@ export class PatientAgreementComponent implements OnInit {
                     observer.complete();
                 }
             });
-            return () => {              
-                console.log("agreementList unsubscribed")
-            };
+            //return () => {              
+            //    console.log("agreementList unsubscribed")
+            //};
         });
         this.getAgreement();
         
@@ -70,34 +70,39 @@ export class PatientAgreementComponent implements OnInit {
     sendAgreement():void{
         var agreementId = this.agreementSelected;
         var providerId = Meteor.userId();
-        this.route.params
-        .map(params => params['patientId'])
-        .subscribe(patientId => {
-            let agreementTitle = jQuery("#agreementList option:selected").text();
-            let agreementData = {
-                providerId,
-                patientId,
-                agreement: {
-                    _id: agreementId,
-                    title: agreementTitle
-                },
-                assignDate : new Date(),
-                action : 'Pending',
-                status : true
-            };
-            Meteor.call('sendAgreement',agreementData,(err,res)=>{
-                if(err){
-                    showAlert("Agreement not sent to patient.", "danger");
-                }
-                if (res) {
-                    showAlert("Agreement sent to patient.", "success");
-                }
+        if (agreementId) {
+            this.route.params
+            .map(params => params['patientId'])
+            .subscribe(patientId => {
+                let agreementTitle = jQuery("#agreementList option:selected").text();
+                let agreementData = {
+                    providerId,
+                    patientId,
+                    agreement: {
+                        _id: agreementId,
+                        title: agreementTitle
+                    },
+                    assignDate : new Date(),
+                    action : 'Pending',
+                    status : true
+                };
+                Meteor.call('sendAgreement',agreementData,(err,res)=>{
+                    if(err){
+                        showAlert("Agreement not sent to patient.", "danger");
+                    }
+                    if (res) {
+                        showAlert("Agreement sent to patient.", "success");
+                    }
+                });
             });
-        });
+        }else{
+            showAlert("Please select the agreement.", "danger");
+        }
+        
     }
 
-    getAgreementName(agreementId) {
-        console.log("inside getAgreementName");
-    }
+    //getAgreementName(agreementId) {
+    //    console.log("inside getAgreementName");
+    //}
 
 }
