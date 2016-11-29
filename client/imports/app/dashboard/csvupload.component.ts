@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Meteor } from "meteor/meteor";
+import { showAlert } from "../shared/show-alert";
 import { upload } from '../../../../both/methods/csvs.methods';
 
 import template from "./csvupload.html";
@@ -37,29 +38,33 @@ export class CsvUploadComponent implements OnInit {
 function startUpload(file: File): void {
     // check for previous upload
     if (this.uploading === true) {
-        console.log("aleady uploading...");
+        //console.log("aleady uploading...");
+        showAlert('Aleady uploading...', "info");
         return;
     }
     
     // start uploading
-    console.log('file uploading...');
+    //console.log('file uploading...');
     this.uploading = true;
 
     upload(file)
     .then((res) => {
         this.uploading = false;
-        console.log("file upload done.")
-        console.log("file id:", res._id);
+        //console.log("file upload done.")
+        //console.log("file id:", res._id);
         Meteor.call("csv.process", res._id, (err, res) => {
             if (err) {
-                console.log("error in csv import:", err);
+                //console.log("error in csv import:", err);
+                showAlert('Error in csv import: '+ err, "danger");
                 return;
             }
-            console.log("csv import done.");
+            //console.log("csv import done.");
+            showAlert("csv import successfully.", "success");
         });
     })
     .catch((error) => {
         this.uploading = false;
-        console.log(`error in file upload:`, error);
+        //console.log('Error in file upload:', error);
+        showAlert('Error in file upload: '+ error, "danger");
     });
 }
