@@ -43,9 +43,13 @@
                         <label>Zip</label>
                         <span class="robotofont">{{patient.zip}}</span>
                     </li>
+                    <li *ngIf="patient.accessCode">
+                        <label>Access Url</label>
+                        <span class="robotofont">{{patient.accessCode}}</span>
+                    </li>
                 </ul>
-                <p *ngIf="!patient.bio">Please edit profile to write your biography.</p>
-                <p *ngIf="patient.bio">{{patient.bio}}</p>
+                <p *ngIf="!patient.bio" class="col s12">Please edit profile to write your biography.</p>
+                <p *ngIf="patient.bio" class="col s12">{{patient.bio}}</p>
             </section>
             <section class="request-btn">
                 <!--request button-->

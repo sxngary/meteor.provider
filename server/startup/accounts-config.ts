@@ -1,4 +1,6 @@
+//import { AccountsTemplates } from 'meteor/useraccounts:core';
 import { Accounts } from 'meteor/accounts-base';
+//import { Roles } from 'meteor/alanning:roles';
 
 Accounts.onCreateUser(function(options, user) {
    // Use provided userData in options, or create an empty object
@@ -24,3 +26,26 @@ Accounts.onCreateUser(function(options, user) {
    // Returns the user object
    return user;
 });
+
+////--------remove login attempt limit-----------------//
+//Accounts.removeDefaultRateLimit();
+//
+////-------set roles--------//
+//const setUserRolesOnSignUp = (userId, info) => {
+//  Roles.addUsersToRoles(userId, ['provider']);
+//};
+//
+////AccountsTemplates.configure({
+////  postSignUpHook: setUserRolesOnSignUp,
+////});
+//
+////-------check user--------//
+//Accounts.validateLoginAttempt(function (options) {
+//    if (options.user && options.allowed) {
+//        var isAdmin = Roles.userIsInRole(options.user, ['provider'])
+//        if (!isAdmin) {
+//            throw new Meteor.Error(403, "Login permission denied!");
+//        }
+//    }
+//    return true;
+//});

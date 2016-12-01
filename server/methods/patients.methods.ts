@@ -172,8 +172,29 @@ Meteor.methods({
         Meteor.users.update({_id: patient.userId, type: "patient"}, {$set: {patient: user.patient} });
         return;
     },
-    "patient.sendInvite": (userId: string) => {
-        // check user object
+    
+    //----send signup invitation to patient---------//
+    "patient.sendInvite": (patientId: string) => {
+        //console.log(patientId,'userId');
+        let patientData = Patients.findOne({_id: patientId, "status.isDeleted":false});
+        if (typeof patientData == "undefined" || typeof patientData._id == "undefined") {
+            throw new Meteor.Error(403, "Invalid patientId passed.");
+        }else{
+            //console.log(patientData,'patientData');
+            let accessCode = getAccessCode();
+            if (accessCode) {
+                let getCode = Patients.update({_id:patientData._id},{$set:{accessCode:accessCode}});
+                if (getCode) {
+                    return getCode;
+                }else{
+                    new Meteor.Error(403, "Invalid userId passed to patient.sendInvite()");
+                    return;
+                }
+            }
+        }  
+        
+       
+       /* // check user object
         let user:any = Meteor.users.findOne({_id: userId, "type": "patient", "status.isClaimed": false});
         if (typeof user == "undefined") {
             new Meteor.Error(403, "Invalid userId passed to patient.sendInvite()");
@@ -193,8 +214,10 @@ Meteor.methods({
         } });
 
         // send email
-        Accounts.sendEnrollmentEmail(userId);
+        Accounts.sendEnrollmentEmail(userId);*/
     },
+    
+    
     "patient.remove": (patientId: String) => {
         // check patient row
         let patient = Patients.collection.findOne({_id: patientId});
@@ -235,3 +258,23 @@ Meteor.methods({
         return;
     }
 })
+
+
+//-------------comman function---------------//
+function getAccessCode(){
+    var accessCode='';
+    var possible = "ABCDEFGHJKLMNPQRSTUVWXYZ123456789";
+    for( var i=0; i < 6; i++ ){
+        accessCode += possible.charAt(Math.floor(Math.random() * possible.length));
+    }    
+    var checkUnique = Patients.find({accessCode:accessCode});
+    if(checkUnique){
+        if(checkUnique.length>0){
+            getAccessCode();
+        }else{
+            return accessCode;
+        }
+    }else{
+        return accessCode;
+    }
+}

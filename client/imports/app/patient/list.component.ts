@@ -147,14 +147,17 @@ export class PatientListComponent extends MeteorComponent implements OnInit, OnD
         this.nameOrder.next(parseInt(nameOrder));
     }
 
+    //----send signup invitation to patient---------//    
     sendInvite(patient: Patient) {
         Meteor.call("patient.sendInvite", patient._id, (err, res) => {
             if (err) {
                 //console.log("error calling patient.sendInvite");
                 showAlert("Error calling patient.sendInvite", "danger");
                 return;
+            }else{
+                //console.log(res,'res');
+                showAlert("Invite sent to patient.", "success");
             }
-            showAlert("Invite sent to patient.", "success");
         })
     }
 
