@@ -1,1 +1,1 @@
-# meteor.app2
+# Regulated pharma manager provider portal.
