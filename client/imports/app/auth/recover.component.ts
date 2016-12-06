@@ -15,9 +15,10 @@ export class RecoverComponent implements OnInit {
 
   constructor(private router: Router, private zone: NgZone, private formBuilder: FormBuilder) {}
 
-  ngOnInit() {
+  ngOnInit() { 
+    var emailRegex = "[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})";
     this.recoverForm = this.formBuilder.group({
-      email: ['', Validators.required]
+      email: ['', Validators.compose([Validators.required, Validators.pattern(emailRegex)])]
     });
 
     this.error = '';
