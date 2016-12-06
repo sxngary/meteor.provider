@@ -4,3 +4,10 @@
     font-size: 0.9em;
     color: #F44336;
 }
+
+.input-field div.error {
+    margin-top: -15px;
+    padding-bottom: 10px;
+    font-size: 0.9em;
+    color: #F44336;
+}
