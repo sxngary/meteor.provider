@@ -21,7 +21,7 @@
 <section class="serach-bg">
     <section class="search col s10">
         <input id="search" type="text" #searchtext class="col s12" placeholder="Search here..." (keyup.enter)="search(searchtext.value)" [(ngModel)]="searchString" />
-        <label for="search" (click)="search(searchtext.value)"><i class="material-icons">search</i></label>
+        <label class="tooltipped" for="search" (click)="search(searchtext.value)" data-position="top" data-delay="0" data-tooltip="Click to Search"><i class="material-icons">search</i></label>
     </section>
     <section class="download-btn">
         <!--<a class="waves-effect waves-light btn"><i class="zmdi zmdi-download"></i>CSV Import</a>-->
@@ -63,18 +63,18 @@
         <section class="col s6 mar-tp10">
             <h2 class="pateint-name"><a [routerLink]="['/patients/details', user._id]">{{user.firstName}} {{user.lastName}}</a></h2>
             <ul class="pateint-deatil">
-                <li class="feamle-lt"><i><img src="images/feamle-ic.png" alt=""/></i> {{user.gender}}</li>
-                <li><i class="zmdi zmdi-walk"></i> {{user.dob | age}}</li>
+                <li class="feamle-lt"><i><img src="images/feamle-ic.png" alt="" class="tooltipped" data-position="top" data-delay="0" data-tooltip="Gender" /></i> {{user.gender}}</li>
+                <li><i class="zmdi zmdi-walk tooltipped" data-position="top" data-delay="0" data-tooltip="Age"></i> {{user.dob | age}}</li>
             </ul>
             <address class="col s12">
-                <i class="zmdi zmdi-pin"></i> {{user.address}}
+                <i class="zmdi zmdi-pin tooltipped" data-position="top" data-delay="0" data-tooltip="Address"></i> {{user.address}}
             </address>
         </section>
         <section class="col s4 detail-btn">
             <ul>
-                <li *ngIf="!user.userId"><a class="btn-floating waves-effect waves-light green" href="javascript:void(0);" (click)="sendInvite(user)"><i class="material-icons">email</i></a></li>
-                <li><a class="btn-floating waves-effect waves-light blue" href="javascript:void(0);" [routerLink]="['/patients/edit', user._id]"><i class="material-icons">mode_edit</i></a></li>
-                <li *ngIf="!user.status.isDeleted"><a class="btn-floating waves-effect waves-light red" href="javascript:void(0);" (click)="deletePatient(user)"><i class="material-icons">delete</i></a></li>
+                <li *ngIf="!user.userId"><a class="btn-floating waves-effect waves-light green tooltipped" href="javascript:void(0);" (click)="sendInvite(user)" data-position="top" data-delay="0" data-tooltip="Send Invite"><i class="material-icons">email</i></a></li>
+                <li><a class="btn-floating waves-effect waves-light blue tooltipped" href="javascript:void(0);" [routerLink]="['/patients/edit', user._id]" data-position="top" data-delay="0" data-tooltip="Edit Patient"><i class="material-icons">mode_edit</i></a></li>
+                <li *ngIf="!user.status.isDeleted"><a class="btn-floating waves-effect waves-light red tooltipped" href="javascript:void(0);" (click)="deletePatient(user)" data-position="top" data-delay="0" data-tooltip="Delete Patient"><i class="material-icons">delete</i></a></li>
             </ul>
         </section>
     </section>
