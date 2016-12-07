@@ -43,11 +43,11 @@
                         <label>Zip</label>
                         <span class="robotofont">{{patient.zip}}</span>
                     </li>
-                    <li *ngIf="patient.accessCode">
+                    <li *ngIf="patient.accessCode && !patient.userId">
                         <label>Access Code</label>
                         <span class="robotofont">{{patient.accessCode}}</span>
                     </li>
-                    <li *ngIf="patient.accessCode">
+                    <li *ngIf="patient.accessCode && !patient.userId">
                         <label>Access Url</label>
                         <span class="robotofont">http://52.39.212.226:4038/signup/{{patient.accessCode}}</span>
                     </li>
