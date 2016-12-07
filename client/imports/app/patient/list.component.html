@@ -56,7 +56,10 @@
 [ngClass]="{'red accent-1': user.status.isDeleted}"
 [hidden]="user.status.isDeleted">
     <section class="pateint-list">
-        <section class="col s2 pateint-pic"> <img class="responsive-img" src="images/pic1.png" alt=""/> </section>
+        <section class="col s2 pateint-pic"> 
+            <img *ngIf="user.gender == 'Female'" class="responsive-img" src="images/no-image-female.jpg" alt=""/>
+            <img *ngIf="user.gender == 'Male'" class="responsive-img" src="images/no-image-male.jpg" alt=""/> 
+        </section>
         <section class="col s6 mar-tp10">
             <h2 class="pateint-name"><a [routerLink]="['/patients/details', user._id]">{{user.firstName}} {{user.lastName}}</a></h2>
             <ul class="pateint-deatil">

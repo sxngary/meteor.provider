@@ -38,6 +38,7 @@ Meteor.methods({
         check(data.guarantor, String);
 
         // insert patient
+        data.providerId = Meteor.userId();
         data.status = {
             isDeleted: false
         };
