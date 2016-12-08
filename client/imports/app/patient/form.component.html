@@ -1,6 +1,7 @@
 <section>
     
-    <h2>Edit Patient</h2>
+    <h2 *ngIf="!!patient">Edit Patient</h2>
+    <h2 *ngIf="!patient">Create Patient</h2>
 
     <section class="col s12 pt-detail bt-shadow">
         <form class="col s12" [hidden]="!user" [formGroup]="patientForm" (ngSubmit)="savePatient();">
