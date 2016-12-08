@@ -7,64 +7,147 @@
             <div class="input-field col s12">
             <input formControlName="firstName" id="firstName" [ngClass]="{'invalid':patientForm.controls['firstName'].touched && !patientForm.controls['firstName'].valid}" />
             <label for="firstName" class="active">First Name</label>
-            <p class="error" [hidden]="!(patientForm.controls['firstName'].touched && !patientForm.controls['firstName'].valid)">Please type correct value.</p>
+            <div *ngIf="patientForm.controls['firstName'].errors && patientForm.controls['firstName'].touched" class="error">
+                <div [hidden]="!patientForm.controls['firstName'].errors.required">First Name is required.</div>
+                <div [hidden]="!patientForm.controls['firstName'].errors.pattern">Minimum 2 character required.</div>
+            </div>
             </div>
 
             <div class="input-field col s12">
             <input formControlName="lastName" id="lastName" [ngClass]="{'invalid':patientForm.controls['lastName'].touched && !patientForm.controls['lastName'].valid}" />
             <label for="lastName" class="active">Last Name</label>
-            <p class="error" [hidden]="!(patientForm.controls['lastName'].touched && !patientForm.controls['lastName'].valid)">Please type correct value.</p>
+            <div *ngIf="patientForm.controls['lastName'].errors && patientForm.controls['lastName'].touched" class="error">
+                <div [hidden]="!patientForm.controls['lastName'].errors.required">Last Name is required.</div>
+                <div [hidden]="!patientForm.controls['lastName'].errors.pattern">Minimum 2 character required.</div>
+            </div>
+            </div>
+
+            <div class="input-field col s12">
+            <input formControlName="email" id="email" [ngClass]="{'invalid':patientForm.controls['email'].touched && !patientForm.controls['email'].valid}" />
+            <label for="email" class="active">Email</label>
+            <div *ngIf="patientForm.controls['email'].errors && patientForm.controls['email'].touched" class="error">
+                <div [hidden]="!patientForm.controls['email'].errors.required">Email is required.</div>
+                <div [hidden]="!patientForm.controls['email'].errors.pattern">Invalid Email address.</div>
+            </div>
+            </div>
+            
+            <div class="input-field col s12">
+            <input type="date" class="datepicker" formControlName="dob" id="dob" [ngClass]="{'invalid':patientForm.controls['dob'].touched && !patientForm.controls['dob'].valid}" />
+            <label for="dob" class="active">DOB</label>
+            <div *ngIf="patientForm.controls['dob'].errors && patientForm.controls['dob'].touched" class="error">
+                <div [hidden]="!patientForm.controls['dob'].errors.required">DOB is required.</div>
+            </div>
             </div>
 
             <div class="input-field col s12">
             <select class="browser-default" formControlName="gender" id="gender" [ngClass]="{'invalid':patientForm.controls['gender'].touched && !patientForm.controls['gender'].valid}">
-                <option>Please Select</option>
+                <option value="">Please Select</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
             </select>
             <label for="gender" class="active">Gender</label>
-            <p class="error" [hidden]="!(patientForm.controls['gender'].touched && !patientForm.controls['gender'].valid)">Please select a valid option.</p>
+            <div *ngIf="patientForm.controls['gender'].errors && patientForm.controls['gender'].touched" class="error">
+                <div [hidden]="!patientForm.controls['gender'].errors.required">Please select gender option.</div>
+                <div [hidden]="!patientForm.controls['gender'].errors.maxlength">Invalid gender option selected.</div>
+            </div>
             </div>
 
             <div class="input-field col s12">
             <textarea formControlName="bio" id="bio" placeholder="Please write you own bio." [ngClass]="{'invalid':patientForm.controls['bio'].touched && !patientForm.controls['bio'].valid}" class="materialize-textarea"></textarea>
-            <p class="error" [hidden]="!(patientForm.controls['bio'].touched && !patientForm.controls['bio'].valid)">Please type correct value.</p>
+            <div *ngIf="patientForm.controls['bio'].errors && patientForm.controls['bio'].touched" class="error">
+                <div [hidden]="!patientForm.controls['bio'].errors.required">Bio is required.</div>
+                <div [hidden]="!patientForm.controls['bio'].errors.maxlength">Maximum 100 characters allowed.</div>
+            </div>
             </div>
 
             <div class="input-field col s12">
             <input formControlName="address" id="address" [ngClass]="{'invalid':patientForm.controls['address'].touched && !patientForm.controls['address'].valid}" />
             <label for="address" class="active">Street Address</label>
-            <p class="error" [hidden]="!(patientForm.controls['address'].touched && !patientForm.controls['address'].valid)">Please type correct value.</p>
+            <div *ngIf="patientForm.controls['address'].errors && patientForm.controls['address'].touched" class="error">
+                <div [hidden]="!patientForm.controls['address'].errors.required">Address is required.</div>
+                <div [hidden]="!patientForm.controls['address'].errors.maxlength">Maximum 100 characters allowed.</div>
+            </div>
             </div>
 
             <div class="input-field col s12">
             <input formControlName="city" id="city" [ngClass]="{'invalid':patientForm.controls['city'].touched && !patientForm.controls['city'].valid}" />
             <label for="city" class="active">City</label>
-            <p class="error" [hidden]="!(patientForm.controls['city'].touched && !patientForm.controls['city'].valid)">Please type correct value.</p>
+            <div *ngIf="patientForm.controls['city'].errors && patientForm.controls['city'].touched" class="error">
+                <div [hidden]="!patientForm.controls['city'].errors.required">City is required.</div>
+                <div [hidden]="!patientForm.controls['city'].errors.maxlength">Maximum 20 characters allowed.</div>
+            </div>
             </div>
 
             <div class="input-field col s12">
             <input formControlName="state" id="state" [ngClass]="{'invalid':patientForm.controls['state'].touched && !patientForm.controls['state'].valid}" />
             <label for="state" class="active">State</label>
-            <p class="error" [hidden]="!(patientForm.controls['state'].touched && !patientForm.controls['state'].valid)">Please type correct value.</p>
+            <div *ngIf="patientForm.controls['state'].errors && patientForm.controls['state'].touched" class="error">
+                <div [hidden]="!patientForm.controls['state'].errors.required">State is required.</div>
+                <div [hidden]="!patientForm.controls['state'].errors.maxlength">Maximum 20 characters allowed.</div>
+            </div>
             </div>
 
             <div class="input-field col s12">
             <input formControlName="zip" id="zip" [ngClass]="{'invalid':patientForm.controls['zip'].touched && !patientForm.controls['zip'].valid}" />
             <label for="zip" class="active">Zip</label>
-            <p class="error" [hidden]="!(patientForm.controls['zip'].touched && !patientForm.controls['zip'].valid)">Please type correct value.</p>
+            <div *ngIf="patientForm.controls['zip'].errors && patientForm.controls['zip'].touched" class="error">
+                <div [hidden]="!patientForm.controls['zip'].errors.required">Zip is required.</div>
+                <div [hidden]="!patientForm.controls['zip'].errors.maxlength">Maximum 5 characters allowed.</div>
+            </div>
             </div>
 
             <div class="input-field col s12">
             <input formControlName="company" id="company" [ngClass]="{'invalid':patientForm.controls['company'].touched && !patientForm.controls['company'].valid}" />
             <label for="company" class="active">Company</label>
-            <p class="error" [hidden]="!(patientForm.controls['company'].touched && !patientForm.controls['company'].valid)">Please type correct value.</p>
+            <div *ngIf="patientForm.controls['company'].errors && patientForm.controls['company'].touched" class="error">
+                <div [hidden]="!patientForm.controls['company'].errors.required">Company is required.</div>
+                <div [hidden]="!patientForm.controls['company'].errors.maxlength">Maximum 40 characters allowed.</div>
+            </div>
             </div>
 
             <div class="input-field col s12">
             <input formControlName="phoneNum" id="phoneNum" [ngClass]="{'invalid':patientForm.controls['phoneNum'].touched && !patientForm.controls['phoneNum'].valid}" />
             <label for="phoneNum" class="active">Phone Num</label>
-            <p class="error" [hidden]="!(patientForm.controls['phoneNum'].touched && !patientForm.controls['phoneNum'].valid)">Please type correct value.</p>
+            <div *ngIf="patientForm.controls['phoneNum'].errors && patientForm.controls['phoneNum'].touched" class="error">
+                <div [hidden]="!patientForm.controls['phoneNum'].errors.required">Phone Num is required.</div>
+                <div [hidden]="!patientForm.controls['phoneNum'].errors.pattern">Invalid Phone Num.</div>
+            </div>
+            </div>
+
+            <div class="input-field col s12">
+            <input formControlName="groupId" id="groupId" [ngClass]="{'invalid':patientForm.controls['groupId'].touched && !patientForm.controls['groupId'].valid}" />
+            <label for="groupId" class="active">Group ID</label>
+            <div *ngIf="patientForm.controls['groupId'].errors && patientForm.controls['groupId'].touched" class="error">
+                <div [hidden]="!patientForm.controls['groupId'].errors.required">Group ID is required.</div>
+                <div [hidden]="!patientForm.controls['groupId'].errors.maxlength">Maximum 20 characters allowed.</div>
+            </div>
+            </div>
+
+            <div class="input-field col s12">
+            <input formControlName="personalId" id="personalId" [ngClass]="{'invalid':patientForm.controls['personalId'].touched && !patientForm.controls['personalId'].valid}" />
+            <label for="personalId" class="active">Personal ID</label>
+            <div *ngIf="patientForm.controls['personalId'].errors && patientForm.controls['personalId'].touched" class="error">
+                <div [hidden]="!patientForm.controls['personalId'].errors.required">Personal ID is required.</div>
+                <div [hidden]="!patientForm.controls['personalId'].errors.maxlength">Maximum 20 characters allowed.</div>
+            </div>
+            </div>
+
+            <div class="input-field col s12">
+            <input formControlName="insurer" id="insurer" [ngClass]="{'invalid':patientForm.controls['insurer'].touched && !patientForm.controls['insurer'].valid}" />
+            <label for="insurer" class="active">Insurer</label>
+            <div *ngIf="patientForm.controls['insurer'].errors && patientForm.controls['insurer'].touched" class="error">
+                <div [hidden]="!patientForm.controls['insurer'].errors.required">Insurer is required.</div>
+                <div [hidden]="!patientForm.controls['insurer'].errors.maxlength">Maximum 20 characters allowed.</div>
+            </div>
+            </div>
+
+            <div class="input-field col s12">
+            <input formControlName="guarantor" id="guarantor" [ngClass]="{'invalid':patientForm.controls['guarantor'].touched && !patientForm.controls['guarantor'].valid}" />
+            <label for="guarantor" class="active">Guarantor</label>
+            <div *ngIf="patientForm.controls['guarantor'].errors && patientForm.controls['guarantor'].touched" class="error">
+                <div [hidden]="!patientForm.controls['guarantor'].errors.required">Guarantor is required.</div>
+                <div [hidden]="!patientForm.controls['guarantor'].errors.maxlength">Maximum 20 characters allowed.</div>
+            </div>
             </div>
 
             <div class="row">

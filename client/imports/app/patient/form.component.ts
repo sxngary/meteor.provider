@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import {Observable, Subscription, Subject} from "rxjs";
@@ -9,6 +9,9 @@ import { Patient } from "../../../../both/models/csv.model";
 import { InjectUser } from "angular2-meteor-accounts-ui";
 import template from './form.component.html';
 import {showAlert} from "../shared/show-alert";
+import * as moment from 'moment';
+
+declare var jQuery:any;
 
 @Component({
   selector: 'patient-form',
@@ -47,9 +50,11 @@ export class PatientFormComponent extends MeteorComponent implements OnInit {
                     return;
                 }
                 this.patient = patient;
+                let dob = moment(patient.dob).format("YYYY-MM-DD");
                 this.patientForm.controls['firstName'].setValue(patient.firstName);
                 this.patientForm.controls['lastName'].setValue(patient.lastName);
                 this.patientForm.controls['email'].setValue(patient.email);
+                this.patientForm.controls['dob'].setValue(dob);
                 this.patientForm.controls['address'].setValue(patient.address);
                 this.patientForm.controls['city'].setValue(patient.city);
                 this.patientForm.controls['state'].setValue(patient.state);
@@ -58,23 +63,33 @@ export class PatientFormComponent extends MeteorComponent implements OnInit {
                 this.patientForm.controls['gender'].setValue(patient.gender);
                 this.patientForm.controls['company'].setValue(patient.company);
                 this.patientForm.controls['phoneNum'].setValue(patient.phoneNum);
+                this.patientForm.controls['groupId'].setValue(patient.groupId);
+                this.patientForm.controls['personalId'].setValue(patient.personalId);
+                this.patientForm.controls['insurer'].setValue(patient.insurer);
+                this.patientForm.controls['guarantor'].setValue(patient.guarantor);
             });
         }
 
       });
-      
+
+      var emailRegex = "[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})";      
       this.patientForm = this.formBuilder.group({
         firstName: ['', Validators.compose([Validators.required, Validators.pattern("[a-zA-Z ]{2,30}")]) ],
         lastName: ['', Validators.compose([Validators.required, Validators.pattern("[a-zA-Z ]{2,30}")]) ],
-        email: ['', Validators.compose([Validators.required, Validators.pattern("[A-Z0-9'.1234z_%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}")]) ],
-        address: ['', Validators.compose([Validators.maxLength(40), Validators.required]) ],
-        city: ['', Validators.compose([Validators.maxLength(20), Validators.required]) ],
-        state: ['', Validators.compose([Validators.maxLength(20), Validators.required]) ],
-        zip: ['', Validators.compose([Validators.maxLength(5), Validators.required]) ],
-        bio: ['', Validators.compose([Validators.maxLength(100), Validators.required]) ],
-        gender: ['', Validators.compose([Validators.maxLength(6), Validators.required]) ],
-        company: ['', Validators.compose([Validators.maxLength(20), Validators.required]) ],
-        phoneNum: ['', Validators.compose([Validators.required, Validators.pattern("[\s()+-]*([0-9][\s()+-]*){6,20}")]) ]
+        email: ['', Validators.compose([Validators.maxLength(40), Validators.required, Validators.pattern(emailRegex)]) ],
+        dob: ['', Validators.compose([Validators.required]) ],
+        address: ['', Validators.compose([Validators.required, Validators.maxLength(100)]) ],
+        city: ['', Validators.compose([Validators.required, Validators.maxLength(20)]) ],
+        state: ['', Validators.compose([Validators.required, Validators.maxLength(20)]) ],
+        zip: ['', Validators.compose([Validators.required, Validators.maxLength(5)]) ],
+        bio: ['', Validators.compose([Validators.required, Validators.maxLength(100)]) ],
+        gender: ['', Validators.compose([Validators.required, Validators.maxLength(6)]) ],
+        company: ['', Validators.compose([Validators.required, Validators.maxLength(40)]) ],
+        phoneNum: ['', Validators.compose([Validators.required, Validators.pattern("[\s()+-]*([0-9][\s()+-]*){6,20}")]) ],
+        groupId: ['', Validators.compose([Validators.required, Validators.maxLength(20)]) ],
+        personalId: ['', Validators.compose([Validators.required, Validators.maxLength(20)]) ],
+        insurer: ['', Validators.compose([Validators.required, Validators.maxLength(20)]) ],
+        guarantor: ['', Validators.compose([Validators.required, Validators.maxLength(20)]) ],
         });
   }
 
@@ -85,26 +100,52 @@ export class PatientFormComponent extends MeteorComponent implements OnInit {
     }
 
     if (this.patientForm.valid) {
-      Meteor.call("patients.update", this.patientId, this.patientForm.value, (err, res) => {
-          //console.log("patient.update callback");
+      if (!!this.patientId && this.patientId.length) {
+        Meteor.call("patients.update", this.patientId, this.patientForm.value, (err, res) => {
+            //console.log("patient.update callback");
+            if (err) {
+                //console.log("error updating patient:", err);
+                showAlert("" + err, "danger");
+                return;
+            }
+            showAlert("Patient updated successfully.", "success");
+            this.router.navigate( ['/patients/list'] );
+            //this.patientForm.reset();
+        });
+      } else {
+        Meteor.call("patients.insert", this.patientForm.value, (err, res) => {
           if (err) {
-              //console.log("error updating patient:", err);
-              showAlert("Error updating patient.", "danger")
-              return;
+            showAlert("" + err, "danger");
+            return;
           }
-          showAlert("Patient record updated.", "success");
+          showAlert("Patient created successfully.", "success");
           this.router.navigate( ['/patients/list'] );
-          //this.patientForm.reset();
-      })
+        });
+      }
       
     } else {
-      console.log("formbuilder:", this.formBuilder);
+      //console.log("formbuilder:", this.formBuilder);
       showAlert("Please type correct values.", "warning")
     }
   }
   
-    cancelAction():void{
-        this.router.navigate( ['/patients/details/'+this.patientId] );
-    }
+  cancelAction():void{
+      if (!!this.patientId && this.patientId.length) {
+        this.router.navigate( ['/patients/details', this.patientId] );
+      } else {
+        this.router.navigate( ['/patients/list'] );
+      }
+  }
 
+  ngAfterViewInit() {
+      jQuery(function($){
+      $('select').material_select();
+      $('.tooltipped').tooltip({delay: 50});
+      /*$('.datepicker').pickadate({
+          selectMonths: true, // Creates a dropdown to control month
+          selectYears: 15 // Creates a dropdown of 15 years to control year
+      });*/
+      setTimeout(function(){ $('label').addClass("active"); }, 200);
+      })
+  }
 }

@@ -11,7 +11,7 @@ interface Options {
 }
 
 Meteor.methods({
-    "patients.insert": (data) => {
+    "patients.validate": function(data) {
         // apply validations
         check(data.firstName, String);
         if (! isValidName(data.firstName)) {
@@ -25,17 +25,27 @@ Meteor.methods({
         if (! isValidEmail(data.email) ) {
             throw new Meteor.Error(`Invalid email ${data.email}`);
         }
+        // convert date to date type explicitly
+        data.dob = new Date(data.dob);
         check(data.dob, Date);
         check(data.address, String);
         check(data.phoneNum, String);
         if (! isValidPhone(data.phoneNum)) {
             throw new Meteor.Error(`Invalid phoneNum ${data.phoneNum}`);
         }
-        check(data.groupId, Number);
-        check(data.personalId, Number);
+        check(data.groupId, String);
+        check(data.personalId, String);
         check(data.company, String);
         check(data.insurer, String);
         check(data.guarantor, String);
+
+        return true;
+    },
+    "patients.insert": (data) => {
+        // validate data
+        if (! Meteor.call("patients.validate", data)) {
+            throw new Meteor.Error(403, `Invalid data supplied.`);
+        }
 
         // insert patient
         data.providerId = Meteor.userId();
@@ -147,30 +157,22 @@ Meteor.methods({
     "patients.findOne": (patientId: String): Patient => {
         return Patients.collection.findOne({_id: patientId});
     },
-    "patients.update": (patientId: String, dataToUpdate: Object) => {
+    "patients.update": (patientId: String, dataToUpdate: any) => {
         // check patient row
         let patient = Patients.collection.findOne({_id: patientId});
         if (typeof patient == "undefined" || typeof patient._id == "undefined") {
             throw new Meteor.Error(403, "Invalid patientId passed.");
         }
+
+        // validate data
+        if (! Meteor.call("patients.validate", dataToUpdate)) {
+            throw new Meteor.Error(403, `Invalid data supplied.`);
+        }
         
         // update patient row
+        dataToUpdate.dob = new Date(dataToUpdate.dob);
         Patients.collection.update({_id: patientId}, {$set: dataToUpdate});
 
-        // check user reference
-        if (typeof patient.userId == "undefined") {
-            return;
-        }
-
-        // check user object
-        let user:any = Meteor.users.findOne({_id: patient.userId});
-        if (typeof user == "undefined") {
-            return;
-        }
-
-        // update user profile
-        _.extend(user.patient, dataToUpdate);
-        Meteor.users.update({_id: patient.userId, type: "patient"}, {$set: {patient: user.patient} });
         return;
     },
     
