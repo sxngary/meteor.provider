@@ -1,9 +1,9 @@
-<section *ngIf="patient">
+<section>
     
     <h2>Edit Patient</h2>
 
     <section class="col s12 pt-detail bt-shadow">
-        <form class="col s12" [hidden]="!user" [formGroup]="patientForm" (ngSubmit)="updatePatient();">
+        <form class="col s12" [hidden]="!user" [formGroup]="patientForm" (ngSubmit)="savePatient();">
             <div class="input-field col s12">
             <input formControlName="firstName" id="firstName" [ngClass]="{'invalid':patientForm.controls['firstName'].touched && !patientForm.controls['firstName'].valid}" />
             <label for="firstName" class="active">First Name</label>
@@ -17,9 +17,13 @@
             </div>
 
             <div class="input-field col s12">
-            <input formControlName="gender" id="gender" [ngClass]="{'invalid':patientForm.controls['gender'].touched && !patientForm.controls['gender'].valid}" />
+            <select class="browser-default" formControlName="gender" id="gender" [ngClass]="{'invalid':patientForm.controls['gender'].touched && !patientForm.controls['gender'].valid}">
+                <option>Please Select</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
             <label for="gender" class="active">Gender</label>
-            <p class="error" [hidden]="!(patientForm.controls['gender'].touched && !patientForm.controls['gender'].valid)">Please type correct value.</p>
+            <p class="error" [hidden]="!(patientForm.controls['gender'].touched && !patientForm.controls['gender'].valid)">Please select a valid option.</p>
             </div>
 
             <div class="input-field col s12">
@@ -65,7 +69,10 @@
 
             <div class="row">
                 <div class="col s12">
-                <button class="btn waves-effect waves-light blue" type="submit" name="action" [disabled]="!patientForm.valid">Update</button>
+                <button class="btn waves-effect waves-light blue" type="submit" name="action" [disabled]="!patientForm.valid">
+                    <span *ngIf="!!patient">Update</span>
+                    <span *ngIf="!patient">Create</span>
+                </button>
                 <button (click)="cancelAction();" class="btn waves-effect waves-light grey" type="button" name="cancel">Cancel</button>
                 </div>
             </div>

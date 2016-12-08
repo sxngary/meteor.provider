@@ -10,6 +10,7 @@ import {PatientAgreementComponent} from "./agreements.component"
 
 export const routes = [
     { path: 'patients/list', component: PatientListComponent, canActivate: ['canActivateForLoggedIn'] },
+    { path: 'patients/add', component: PatientFormComponent, canActivate: ['canActivateForLoggedIn'] },
     { path: 'patients/edit/:patientId', component: PatientFormComponent, canActivate: ['canActivateForLoggedIn'] },
     { path: 'patients/details/:patientId', component: PatientDetailsComponent, canActivate: ['canActivateForLoggedIn'] },
     { path: 'patients/questionnaire/:patientId', component: PatientQuestionnaireComponent, canActivate: ['canActivateForLoggedIn'] },

@@ -39,31 +39,46 @@ export class PatientFormComponent extends MeteorComponent implements OnInit {
         this.patientId = patientId;
         //console.log("patientId:", patientId);
 
-        this.call("patients.findOne", patientId, (err, patient) => {
-            if (err) {
-                //console.log("error while fetching patient:", err);
-                showAlert("Error while fetching patient record.", "danger");
-                return;
-            }
-            this.patient = patient;
-            this.patientForm = this.formBuilder.group({
-            firstName: [patient.firstName, Validators.compose([Validators.required, Validators.pattern("[a-zA-Z ]{2,30}")]) ],
-            lastName: [patient.lastName, Validators.compose([Validators.required, Validators.pattern("[a-zA-Z ]{2,30}")]) ],
-            address: [patient.address, Validators.compose([Validators.maxLength(40), Validators.required]) ],
-            city: [patient.city, Validators.compose([Validators.maxLength(20), Validators.required]) ],
-            state: [patient.state, Validators.compose([Validators.maxLength(20), Validators.required]) ],
-            zip: [patient.zip, Validators.compose([Validators.maxLength(5), Validators.required]) ],
-            bio: [patient.bio, Validators.compose([Validators.maxLength(100), Validators.required]) ],
-            gender: [patient.gender, Validators.compose([Validators.maxLength(6), Validators.required]) ],
-            company: [patient.company, Validators.compose([Validators.maxLength(20), Validators.required]) ],
-            phoneNum: [patient.phoneNum, Validators.compose([Validators.required, Validators.pattern("[\s()+-]*([0-9][\s()+-]*){6,20}")]) ]
+        if (!!this.patientId && this.patientId.length) {
+            this.call("patients.findOne", patientId, (err, patient) => {
+                if (err) {
+                    //console.log("error while fetching patient:", err);
+                    showAlert("Error while fetching patient record.", "danger");
+                    return;
+                }
+                this.patient = patient;
+                this.patientForm.controls['firstName'].setValue(patient.firstName);
+                this.patientForm.controls['lastName'].setValue(patient.lastName);
+                this.patientForm.controls['email'].setValue(patient.email);
+                this.patientForm.controls['address'].setValue(patient.address);
+                this.patientForm.controls['city'].setValue(patient.city);
+                this.patientForm.controls['state'].setValue(patient.state);
+                this.patientForm.controls['zip'].setValue(patient.zip);
+                this.patientForm.controls['bio'].setValue(patient.bio);
+                this.patientForm.controls['gender'].setValue(patient.gender);
+                this.patientForm.controls['company'].setValue(patient.company);
+                this.patientForm.controls['phoneNum'].setValue(patient.phoneNum);
             });
-        });
+        }
 
       });
+      
+      this.patientForm = this.formBuilder.group({
+        firstName: ['', Validators.compose([Validators.required, Validators.pattern("[a-zA-Z ]{2,30}")]) ],
+        lastName: ['', Validators.compose([Validators.required, Validators.pattern("[a-zA-Z ]{2,30}")]) ],
+        email: ['', Validators.compose([Validators.required, Validators.pattern("[A-Z0-9'.1234z_%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}")]) ],
+        address: ['', Validators.compose([Validators.maxLength(40), Validators.required]) ],
+        city: ['', Validators.compose([Validators.maxLength(20), Validators.required]) ],
+        state: ['', Validators.compose([Validators.maxLength(20), Validators.required]) ],
+        zip: ['', Validators.compose([Validators.maxLength(5), Validators.required]) ],
+        bio: ['', Validators.compose([Validators.maxLength(100), Validators.required]) ],
+        gender: ['', Validators.compose([Validators.maxLength(6), Validators.required]) ],
+        company: ['', Validators.compose([Validators.maxLength(20), Validators.required]) ],
+        phoneNum: ['', Validators.compose([Validators.required, Validators.pattern("[\s()+-]*([0-9][\s()+-]*){6,20}")]) ]
+        });
   }
 
-  updatePatient(): void {
+  savePatient(): void {
     if (! Meteor.userId()) {
       showAlert('Please log in to update patient.', "danger");
       return;
