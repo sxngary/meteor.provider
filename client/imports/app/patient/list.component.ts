@@ -84,6 +84,12 @@ export class PatientListComponent extends MeteorComponent implements OnInit, OnD
                 this.patients = res.data;
                 this.patientsSize = res.count;
                 this.paginationService.setTotalItems(this.paginationService.defaultId, this.patientsSize);
+
+                setTimeout(function(){
+                    jQuery(function($){
+                    $('.tooltipped').tooltip({delay: 0});
+                    });
+                }, 200);
             })
 
         });
@@ -188,6 +194,7 @@ export class PatientListComponent extends MeteorComponent implements OnInit, OnD
     ngAfterViewInit() {
         jQuery(function($){
         $('select').material_select();
+        $('.tooltipped').tooltip({delay: 50});
         })
     }
 }

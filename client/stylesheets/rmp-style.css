@@ -15,7 +15,7 @@ body { font-family: 'Roboto', sans-serif; font-weight: 400; background: #f0f0f0;
 .robotofont{font-family: 'Roboto', sans-serif;font-weight: 400 !important;}
 header, main, footer { padding-left: 300px; }
 header { padding-left: 0px; }
-header .nav-wrapper { z-index: 9999; }
+header .nav-wrapper { z-index: 9; }
 header .side-nav.fixed { top: 0px; box-shadow: none; }
 header nav { box-shadow: none; background: #fff; border-bottom: 1px solid #b7b7b7; }
 header nav ul a { color: #5a5a5a; font-size: 18px; font-weight: 400; position: relative; padding: 12px 15px; line-height: 33px; }
@@ -81,7 +81,7 @@ address i { color: #c2c2c2; font-size: 20px !important; left: 0; position: absol
 nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i { height: auto; line-height: inherit; }
 main { background: #f0f0f0; padding-top: 10px; padding-bottom: 10px; }
 header .row { margin-bottom: 0; }
-header .head-brk { background: #fff none repeat scroll 0 0; position: relative; z-index: 10000; }
+header .head-brk { background: #fff none repeat scroll 0 0; position: relative; z-index: 1000; }
 input:focus:not([type]):not([readonly]), input[type="text"]:focus:not([readonly]), input[type="password"]:focus:not([readonly]), input[type="email"]:focus:not([readonly]), input[type="url"]:focus:not([readonly]), input[type="time"]:focus:not([readonly]), input[type="date"]:focus:not([readonly]), input[type="datetime"]:focus:not([readonly]), input[type="datetime-local"]:focus:not([readonly]), input[type="tel"]:focus:not([readonly]), input[type="number"]:focus:not([readonly]), input[type="search"]:focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) { border-bottom: none; box-shadow: none; }
 input:focus:not([type]):not([readonly]) + label, input[type="text"]:focus:not([readonly]) + label, input[type="password"]:focus:not([readonly]) + label, input[type="email"]:focus:not([readonly]) + label, input[type="url"]:focus:not([readonly]) + label, input[type="time"]:focus:not([readonly]) + label, input[type="date"]:focus:not([readonly]) + label, input[type="datetime"]:focus:not([readonly]) + label, input[type="datetime-local"]:focus:not([readonly]) + label, input[type="tel"]:focus:not([readonly]) + label, input[type="number"]:focus:not([readonly]) + label, input[type="search"]:focus:not([readonly]) + label, textarea.materialize-textarea:focus:not([readonly]) + label { color: #4286f7; }
 .red { background: #ec5549; }
@@ -244,7 +244,7 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i { height
 .content-circle span { font-size: 25px; }
 .top-content { margin-left: -0.75rem; margin-right: -0.75rem; }
 nav .brand-logo { left: 0; transform: translateX(0%); }
-.top-nav { position: absolute; right: 0.75rem; top: 6px; z-index: 100000; }
+.top-nav { position: absolute; right: 0.75rem; top: 6px; z-index: 1001; }
 .top-nav i { color: #e74234; font-size: 50px; }
 .dash-links > nav { background: rgba(0, 0, 0, 0) none repeat scroll 0 0; height: auto; line-height: 23px; }
 .dash-links .col.s12 { padding: 0; }
@@ -267,7 +267,7 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i { height
 .databox { margin-bottom: 12px; width: 50%; }
 nav .brand-logo { left: 0; transform: translateX(0%); }
 nav .brand-logo { left: 0; transform: translateX(0%); }
-.top-nav { position: absolute; right: 0.75rem; top: 6px; z-index: 100000; }
+.top-nav { position: absolute; right: 0.75rem; top: 6px; z-index: 1001; }
 .top-nav i { color: #e74234; font-size: 50px; }
 .detail-btn li { margin: 0 0 0 3px; }
 address, .pateint-deatil li { font-size: 14px; }
