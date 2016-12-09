@@ -31,6 +31,15 @@
                 <div [hidden]="!patientForm.controls['email'].errors.pattern">Invalid Email address.</div>
             </div>
             </div>
+
+            <div class="input-field col s12">
+            <input formControlName="ssn" id="ssn" [ngClass]="{'invalid':patientForm.controls['ssn'].touched && !patientForm.controls['ssn'].valid}" />
+            <label for="ssn" class="active">SSN</label>
+            <div *ngIf="patientForm.controls['ssn'].errors && patientForm.controls['ssn'].touched" class="error">
+                <div [hidden]="!patientForm.controls['ssn'].errors.required">SSN is required.</div>
+                <div [hidden]="!patientForm.controls['ssn'].errors.pattern">Invalid SSN number.</div>
+            </div>
+            </div>
             
             <div class="input-field col s12">
             <input type="date" class="datepicker" formControlName="dob" id="dob" [ngClass]="{'invalid':patientForm.controls['dob'].touched && !patientForm.controls['dob'].valid}" />

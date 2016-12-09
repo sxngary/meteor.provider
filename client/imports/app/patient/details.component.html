@@ -4,7 +4,8 @@
         <h2>Patient Details</h2>
         <section class="col s12 pt-detail bt-shadow">
             <section class="detail-pic-pateint col s3">
-                <img src="images/deatil-pateint.png" class="responsive-img" alt="">
+                <img *ngIf="patient.gender == 'Female'" class="responsive-img" src="images/no-image-female.jpg" alt=""/>
+                <img *ngIf="patient.gender == 'Male'" class="responsive-img" src="images/no-image-male.jpg" alt=""/>
             </section>
             <section class="col s9 content-ptdetail ">
                 <h2>{{patient.firstName}} {{patient.lastName}}</h2>
@@ -27,8 +28,8 @@
                         <span>{{patient.gender}}</span>
                     </li>
                     <li>
-                        <label>Weight</label>
-                        <span class="robotofont">n.a.</span>
+                        <label>SSN</label>
+                        <span class="robotofont">{{patient.ssn}}</span>
                     </li>
 
                     <li>

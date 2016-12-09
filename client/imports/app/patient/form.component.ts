@@ -54,6 +54,7 @@ export class PatientFormComponent extends MeteorComponent implements OnInit {
                 this.patientForm.controls['firstName'].setValue(patient.firstName);
                 this.patientForm.controls['lastName'].setValue(patient.lastName);
                 this.patientForm.controls['email'].setValue(patient.email);
+                this.patientForm.controls['ssn'].setValue(patient.ssn);
                 this.patientForm.controls['dob'].setValue(dob);
                 this.patientForm.controls['address'].setValue(patient.address);
                 this.patientForm.controls['city'].setValue(patient.city);
@@ -72,11 +73,14 @@ export class PatientFormComponent extends MeteorComponent implements OnInit {
 
       });
 
-      var emailRegex = "[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})";      
+      let emailRegex = "[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})";
+      let ssnRegex = "[0-9]{3}\-?[0-9]{2}\-?[0-9]{4}";
+      let phoneRegex = "[\s()+-]*([0-9][\s()+-]*){6,20}";
       this.patientForm = this.formBuilder.group({
         firstName: ['', Validators.compose([Validators.required, Validators.pattern("[a-zA-Z ]{2,30}")]) ],
         lastName: ['', Validators.compose([Validators.required, Validators.pattern("[a-zA-Z ]{2,30}")]) ],
         email: ['', Validators.compose([Validators.maxLength(40), Validators.required, Validators.pattern(emailRegex)]) ],
+        ssn: ['', Validators.compose([Validators.required, Validators.pattern(ssnRegex)]) ],
         dob: ['', Validators.compose([Validators.required]) ],
         address: ['', Validators.compose([Validators.required, Validators.maxLength(100)]) ],
         city: ['', Validators.compose([Validators.required, Validators.maxLength(20)]) ],
@@ -85,7 +89,7 @@ export class PatientFormComponent extends MeteorComponent implements OnInit {
         bio: ['', Validators.compose([Validators.required, Validators.maxLength(100)]) ],
         gender: ['', Validators.compose([Validators.required, Validators.maxLength(6)]) ],
         company: ['', Validators.compose([Validators.required, Validators.maxLength(40)]) ],
-        phoneNum: ['', Validators.compose([Validators.required, Validators.pattern("[\s()+-]*([0-9][\s()+-]*){6,20}")]) ],
+        phoneNum: ['', Validators.compose([Validators.required, Validators.pattern(phoneRegex)]) ],
         groupId: ['', Validators.compose([Validators.required, Validators.maxLength(20)]) ],
         personalId: ['', Validators.compose([Validators.required, Validators.maxLength(20)]) ],
         insurer: ['', Validators.compose([Validators.required, Validators.maxLength(20)]) ],

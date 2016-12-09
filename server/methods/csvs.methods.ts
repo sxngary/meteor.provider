@@ -35,8 +35,6 @@ Meteor.methods({
                     console.log(`insert patient "${data.firstName} ${data.lastName}"`);
 
                     data.csvId = fileId;
-                    data.groupId = Number(data.groupId);
-                    data.personalId = Number(data.personalId);
                     data.dob = new Date(data.dob);
                     
                     Meteor.call("patients.insert", data);

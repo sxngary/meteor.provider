@@ -9,3 +9,7 @@ export function isValidName (value) {
 export function isValidPhone (value) {
     return /^[\s()+-]*([0-9][\s()+-]*){6,20}$/.test(value);
 }
+
+export function isValidSSN(value) {
+    return /^[0-9]{3}\-?[0-9]{2}\-?[0-9]{4}$/.test(value);
+}

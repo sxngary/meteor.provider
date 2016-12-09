@@ -55,11 +55,11 @@ function startUpload(file: File): void {
         Meteor.call("csv.process", res._id, (err, res) => {
             if (err) {
                 //console.log("error in csv import:", err);
-                showAlert('Error in csv import: '+ err, "danger");
+                showAlert('Error in CSV import: '+ err, "danger");
                 return;
             }
             //console.log("csv import done.");
-            showAlert("csv import successfully.", "success");
+            showAlert("CSV imported successfully.", "success");
         });
     })
     .catch((error) => {

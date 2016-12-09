@@ -4,7 +4,7 @@ import {Meteor} from "meteor/meteor";
 import { Accounts } from 'meteor/accounts-base';
 import {check} from "meteor/check";
 import {Email} from "meteor/email";
-import {isValidEmail, isValidName, isValidPhone} from "../../both/validators";
+import {isValidEmail, isValidName, isValidPhone, isValidSSN} from "../../both/validators";
 
 interface Options {
   [key: string]: any;
@@ -25,8 +25,9 @@ Meteor.methods({
         if (! isValidEmail(data.email) ) {
             throw new Meteor.Error(`Invalid email ${data.email}`);
         }
-        // convert date to date type explicitly
-        data.dob = new Date(data.dob);
+        if (! isValidSSN(data.ssn) ) {
+            throw new Meteor.Error(`Invalid SSN ${data.ssn}`);
+        }
         check(data.dob, Date);
         check(data.address, String);
         check(data.phoneNum, String);
@@ -42,6 +43,9 @@ Meteor.methods({
         return true;
     },
     "patients.insert": (data) => {
+        // convert date to date type explicitly
+        data.dob = new Date(data.dob);
+
         // validate data
         if (! Meteor.call("patients.validate", data)) {
             throw new Meteor.Error(403, `Invalid data supplied.`);
@@ -164,6 +168,8 @@ Meteor.methods({
             throw new Meteor.Error(403, "Invalid patientId passed.");
         }
 
+        // convert date to date type explicitly
+        dataToUpdate.dob = new Date(dataToUpdate.dob);
         // validate data
         if (! Meteor.call("patients.validate", dataToUpdate)) {
             throw new Meteor.Error(403, `Invalid data supplied.`);
