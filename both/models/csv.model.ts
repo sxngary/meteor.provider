@@ -23,7 +23,7 @@ export interface Patient extends CollectionObject {
     ssn: string;
     gender: string;
     address: string;
-    phoneNum: number;
+    phoneNum: string;
     groupId: string;
     personalId: string;
     company: string;
