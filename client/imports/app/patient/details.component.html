@@ -48,10 +48,10 @@
                         <label>Access Code</label>
                         <span class="robotofont">{{patient.accessCode}}</span>
                     </li>
-                    <li *ngIf="patient.accessCode && !patient.userId">
+                    <!--<li *ngIf="patient.accessCode && !patient.userId">
                         <label>Access Url</label>
                         <span class="robotofont">http://52.39.212.226:4038/signup/{{patient.accessCode}}</span>
-                    </li>
+                    </li>-->
                 </ul>
                 <p *ngIf="!patient.bio" class="col s12">Please edit profile to write your biography.</p>
                 <p *ngIf="patient.bio" class="col s12">{{patient.bio}}</p>

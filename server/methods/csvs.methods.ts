@@ -21,7 +21,7 @@ Meteor.methods({
         } });
 
         let filepath = CsvsStore.getFilePath(fileId);
-        console.log("filepath:", filepath);
+        //console.log("filepath:", filepath);
 
         let totalNum = 0, successNum = 0, failedNum = 0;
 
@@ -32,7 +32,7 @@ Meteor.methods({
                 try {
                     totalNum++;
                     successNum++;
-                    console.log(`insert patient "${data.firstName} ${data.lastName}"`);
+                    //console.log(`insert patient "${data.firstName} ${data.lastName}"`);
 
                     data.csvId = fileId;
                     data.dob = new Date(data.dob);
@@ -41,8 +41,8 @@ Meteor.methods({
                 } catch (e) {
                     successNum--;
                     failedNum++;
-                    console.log("error calling insert patient");
-                    console.log(e.message);
+                    //console.log("error calling insert patient");
+                    //console.log(e.message);
                 }
             });
             insertPatient(data, fileId);

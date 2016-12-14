@@ -69,7 +69,7 @@ export class PatientQuestionnaireComponent implements OnInit {
                 //console.log(agreementId,'abc',providerId,'patientid:',patientId);
 
                 let questionnaireTitle = jQuery("#questionnaireList option:selected").text();
-                console.log(questionnaireTitle, 'questionnaireTitle');
+                //console.log(questionnaireTitle, 'questionnaireTitle');
                 let questionnaireData = {
                     providerId,
                     patientId,
@@ -81,7 +81,7 @@ export class PatientQuestionnaireComponent implements OnInit {
                     action: 'Pending',
                     status: true
                 };
-                console.log(questionnaireData, 'data');
+                //console.log(questionnaireData, 'data');
                 Meteor.call('assignQuestionnaire', questionnaireData, (err, res) => {
                     if (err) {
                         showAlert("Questionnaire not assign to patient.", "danger");

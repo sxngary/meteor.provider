@@ -27,7 +27,7 @@ export class CsvUploadComponent implements OnInit {
 
     onFileSelect(event) {
         var files = event.srcElement.files;
-        console.log(files);
+        //console.log(files);
         startUpload(files[0]);
     }
 
