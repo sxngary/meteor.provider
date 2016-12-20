@@ -1,1 +1,1 @@
-# Regulated pharma manager provider portal.
+# Meteor provider portal.
